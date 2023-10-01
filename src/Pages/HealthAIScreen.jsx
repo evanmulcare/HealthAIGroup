@@ -10,11 +10,8 @@ const HealthAIScreen = () => {
 
     const handleEnterClick = () => {
         if (inputText.trim() !== '') {
-            // Add the user's message to the chatMessages array
             setChatMessages([...chatMessages, { text: inputText, type: 'user' }]);
-            // Clear the input field
             setInputText('');
-            // Simulate a response from AI (you can replace this with actual AI responses)
             setTimeout(() => {
                 setChatMessages([...chatMessages, { text: 'AI response', type: 'ai' }]);
             }, 500);

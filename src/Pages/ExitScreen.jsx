@@ -9,13 +9,13 @@ const ExitScreen = () => {
 
   const handleLogout = async () => {
     try {
-      const auth = getAuth(); // Get the Firebase auth instance
-      await signOut(auth); // Sign out the user
+      const auth = getAuth();
+      await signOut(auth); 
       toast.info('Goodbye ;(', {
         position: 'top-center',
         autoClose: 2000,
       });
-      navigate('/signin'); // Navigate to the login page or another desired destination
+      navigate('/signin'); 
     } catch (error) {
       console.error('Error logging out:', error);
     }
@@ -37,7 +37,7 @@ const ExitScreen = () => {
               <button
                 className="w-1/2 bg-gray-300 text-gray-700 rounded-lg py-2 px-4 hover:bg-gray-400 focus:outline-none focus:ring"
                 onClick={() => {
-                  navigate(-1); // Go back to the previous page
+                  navigate(-1); 
                   toast.info('Great! stay as long as you like :)', {
                     position: 'top-center',
                     autoClose: 2000,
@@ -48,7 +48,7 @@ const ExitScreen = () => {
               </button>
               <button
                 className="w-1/2 bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600 focus:outline-none focus:ring"
-                onClick={handleLogout} // Use the handleLogout function for log out action
+                onClick={handleLogout} 
               >
                 Log Out
               </button>

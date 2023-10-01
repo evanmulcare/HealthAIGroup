@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { BsSearch, BsThreeDotsVertical } from 'react-icons/bs';
+import { BsSearch } from 'react-icons/bs';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { db } from '../firebase';
 import { collection, getDocs } from "firebase/firestore";
-import { FaExclamationCircle } from 'react-icons/fa';
 import NewPatient from '../Components/NewPatient';
 import PatientTile from '../Components/PatientTile';
 
@@ -34,11 +33,6 @@ const PatientsScreen = () => {
     const handleUpdate = () => {
         fetchPatientData();
     };
-
-    const filteredPatientData = patientData.filter((patient) =>
-        patient?.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
 
 
     return (
