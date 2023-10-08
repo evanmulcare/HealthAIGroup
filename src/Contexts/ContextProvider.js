@@ -11,7 +11,6 @@ export const ContextProvider = ({ children }) => {
   const [screenSize, setScreenSize] = useState(undefined);
   const [state, setState] = useState(initialState);
 
-
   const handleClick = (clicked) => {
     setIsClicked(clicked);
   };

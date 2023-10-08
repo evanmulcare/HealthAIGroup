@@ -2,16 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { AuthContextProvider } from './Contexts/AuthContext';
 import { ContextProvider } from './Contexts/ContextProvider';
-
+import { Provider } from 'react-redux';
+import store from './Contexts/provider/store';
 ReactDOM.render(
-    <ContextProvider>
-        <AuthContextProvider>
+    <Provider store={store}>
+
+        <ContextProvider>
             <App />
-        </AuthContextProvider>
-    </ContextProvider>
-   ,
+        </ContextProvider>
+    </Provider>
+    ,
     document.getElementById('root')
 );
 

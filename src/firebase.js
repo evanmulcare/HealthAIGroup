@@ -1,7 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage"; 
+import { getStorage } from "firebase/storage";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDUK10SmZmvitwc5wNyHdyrcu6Zri4IsqI",
@@ -11,6 +14,9 @@ const firebaseConfig = {
   messagingSenderId: "681155560147",
   appId: "1:681155560147:web:8d88dedcf53e38bf424a26"
 };
+
+const fire = firebase.initializeApp(firebaseConfig);
+export default fire;
 
 const app = initializeApp(firebaseConfig);
 

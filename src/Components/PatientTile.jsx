@@ -4,11 +4,10 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import DefaultProfile from '../Assets/DefaultProfile.png';
 
-const PatientTile = () => {
+const PatientTile = ({ patient }) => {
     const navigate = useNavigate();
 
     const [showEditMenu, setShowEditMenu] = useState(false);
-
     const tileRef = useRef(null);
 
     const handleDocumentClick = (event) => {
@@ -27,18 +26,17 @@ const PatientTile = () => {
 
     function renderMetric(title, value) {
         return (
-          <div className="flex items-center">
-            <span className="inline-flex h-5 w-5 rounded-full bg-blue-500 items-center justify-center mr-2">
-              <FaCircle className="text-white" />
-            </span>
-            <div>
-              <h2 className="text-sm font-semibold text-gray-600">{title}</h2>
-              <h3 className="text-md font-semibold text-gray-800">{value}</h3>
+            <div className="flex items-center">
+                <span className="inline-flex h-5 w-5 rounded-full bg-blue-500 items-center justify-center mr-2">
+                    <FaCircle className="text-white" />
+                </span>
+                <div>
+                    <h2 className="text-sm font-semibold text-gray-600">{title}</h2>
+                    <h3 className="text-md font-semibold text-gray-800">{value}</h3>
+                </div>
             </div>
-          </div>
         );
-      }
-      
+    }
 
     return (
         <div className='rounded-lg w-full h-full border shadow-lg p-4 cursor-pointer  bg-white mb-4' ref={tileRef}>
@@ -49,10 +47,10 @@ const PatientTile = () => {
                     <div className='text-xl font-semibold text-gray-800 mb-4'>
                         <div className=" text-left">
                             <h2 className="text-xl md:text-2xl font-semibold text-gray-800 text-left">
-                                Jane Doe
+                                {patient?.firstname}  {patient?.lastname}
                             </h2>
                             <h3 className="text-sm text-gray-500 md:text-gray-400">
-                                Janedoe@gmail.com
+                                {patient?.email}
                             </h3>
                         </div>
                     </div>

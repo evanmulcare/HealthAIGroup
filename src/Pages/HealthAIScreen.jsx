@@ -1,37 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BsArrowRightSquareFill } from 'react-icons/bs'
 const HealthAIScreen = () => {
-    const [inputText, setInputText] = useState('');
-    const [chatMessages, setChatMessages] = useState([]);
-
-    const handleInputChange = (e) => {
-        setInputText(e.target.value);
-    };
-
-    const handleEnterClick = () => {
-        if (inputText.trim() !== '') {
-            setChatMessages([...chatMessages, { text: inputText, type: 'user' }]);
-            setInputText('');
-            setTimeout(() => {
-                setChatMessages([...chatMessages, { text: 'AI response', type: 'ai' }]);
-            }, 500);
-        }
-    };
 
     return (
         <div className="w-full h-full p-5">
             <div className="justify-center w-4/5 mx-auto items-center">
                 <h1 className="text-4xl font-semibold text-center text-gray-400 mb-2">HealthAI Chat</h1>
-                <div className="chat-container">
-                    {chatMessages.map((message, index) => (
-                        <div
-                            key={index}
-                            className={`${message.type === 'user' ? 'text-right' : 'text-left'
-                                } mb-2`}
-                        >
-                            {message.text}
-                        </div>
-                    ))}
+                <div>
+
                 </div>
                 <div className=' fixed bottom-28 w-3/5 mx-auto'>
                     <div className='grid grid-cols-2 gap-2 pl-10 pr-10 mb-2'>
@@ -67,13 +43,12 @@ const HealthAIScreen = () => {
 
                     <input
                         type="text"
-                        value={inputText}
-                        onChange={handleInputChange}
+
                         className="w-full rounded-l-lg  p-2 "
                         placeholder="Type your message..."
                     />
                     <button
-                        onClick={handleEnterClick}
+
                         className=" text-blue-500 rounded-r-lg p-1 bg-white hover:text-blue-600 focus:outline-none"
                     >
                         <BsArrowRightSquareFill className='w-full h-full' />

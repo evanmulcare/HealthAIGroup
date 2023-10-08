@@ -1,137 +1,18 @@
-import React, { useEffect, useState, useContext, useRef } from 'react';
-import {  toast } from 'react-toastify';
-import { db,storage } from '../firebase';
-import { getAuth, updateEmail, updatePassword } from "firebase/auth";
-import { uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
-import { AuthContext } from '../Contexts/AuthContext';
-
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUsers } from '../Contexts/actionCreators/ userActionCreator';
 const ProfilePage = () => {
-    const [userData, setUserData] = useState([]);
-    const { currentUser } = useContext(AuthContext);
-    const [editMode, setEditMode] = useState(false); 
-    const [editedEmail, setEditedEmail] = useState('');
-    const [editedPassword, setEditedPassword] = useState('');
-    const [logoFile, setLogoFile] = useState(null);
-    const [fileURL, setfileURL] = useState('');
-    const [per, setPer] = useState(null);
 
-    const auth = getAuth();
+    const dispatch = useDispatch();
+    const currentUser = useSelector((state) => state.auth.currentUser);
 
     useEffect(() => {
-        if (currentUser) {
-            const fetchUserData = async () => {
-                try {
-                    const userRef = collection(db, 'users');
-                    const snapshot = await getDocs(userRef);
+        dispatch(getUsers());
+    }, [dispatch]);
 
-                    snapshot.forEach(async doc => {
-                        if (doc.id === currentUser.uid) {
-                            const userData = doc.data();
-                            setUserData(userData);
-                        }
-                    });
-                } catch (error) {
-                    console.error('Error fetching user data:', error);
-                }
-            };
-
-            fetchUserData();
-        }
-    }, [currentUser]);
-    const handleEditSave = async () => {
-        try {
-            if (editedEmail && editedEmail !== userData.email) {
-                await updateEmail(auth.currentUser, editedEmail);
-            }
-
-            if (editedPassword) {
-                await updatePassword(auth.currentUser, editedPassword);
-            }
-
-    
-
-            if (fileURL !== userData.profileimg) {
-                await updateDoc(doc(db, 'users', currentUser.uid), { profileimg: fileURL });
-            }
-
-            toast.success("Changes Saved!")
-
-            setEditMode(false);
-            setEditedEmail('');
-            setEditedPassword('');
-        } catch (error) {
-            console.error('Error updating user data:', error);
-            toast.error("error saving changes")
-
-        }
-    };
-
-    const handleLogoFileChange = (e) => {
-        const file = e.target.files[0];
-        if (file && isValidImageFile(file)) {
-            setLogoFile(file);
-            setfileURL(URL.createObjectURL(file)); 
-        } else {
-            toast.error('Invalid image file type.', {
-                position: 'top-center',
-                autoClose: 3000,
-            });
-        }
-    };
-
-    useEffect(() => {
-        const uploadFile = () => {
-            const name = new Date().getTime() + logoFile.name;
-            const storageRef = (storage, `/User images/${name}`);
-
-            const uploadTask = uploadBytesResumable(storageRef, logoFile);
-
-            uploadTask.on(
-                'state_changed',
-                (snapshot) => {
-                    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    setPer(progress);
-                    console.log('Upload is ' + progress + '% done');
-                    switch (snapshot.state) {
-                        case 'paused':
-                            console.log('Upload is paused');
-                            break;
-                        case 'running':
-                            console.log('Upload is running');
-                            break;
-                        default:
-                            break;
-                    }
-                },
-                (error) => {
-                    toast.error("Error: " + error, {
-                        position: 'top-center',
-                        autoClose: 3000,
-                    });
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref)
-                        .then((downloadURL) => {
-                            setfileURL(downloadURL); 
-                        })
-                        .catch((error) => {
-                            toast.error("Error: " + error, {
-                                position: 'top-center',
-                                autoClose: 3000,
-                            });
-                        });
-                }
-            );
-        };
-
-        logoFile && uploadFile();
-    }, [logoFile]);
-
-    const isValidImageFile = (file) => {
-        const acceptedTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'];
-        return acceptedTypes.includes(file.type);
-    };
+    const selectUsers = (state) => state.users.users;
+    const userData = useSelector(selectUsers);
+    const currentUserData = userData.find(user => user.docId === currentUser?.uid);
 
     return (
         <div>
@@ -144,24 +25,15 @@ const ProfilePage = () => {
                         <div className="flex flex-col items-left mb-6">
                             <div className="h-48 w-48 rounded-full overflow-hidden">
                                 <img
-                                    src={fileURL || userData?.profileimg} 
+                                    src={currentUserData?.profileimg}
                                     alt="Profile"
                                     className="h-full w-full object-cover"
                                 />
                             </div>
-                            {editMode && (
-                                <input
-                                    type="file"
-                                    id="file"
-                                    onChange={handleLogoFileChange}
-                                    accept=".png, .jpg, .jpeg, .gif"
-                                    className="form-input block tracking-wide text-gray-400 text-xs font-bold mb-2 mx-auto"
-                                    required
-                                />
-                            )}
+
                             <div className="mt-3">
                                 <h2 className="text-xl md:text-2xl font-semibold text-gray-800 text-left ml-6">
-                                    {userData?.firstname} {userData?.lastname}
+                                    {currentUserData?.firstname} {currentUserData?.lastname}
                                 </h2>
                             </div>
                         </div>
@@ -170,8 +42,9 @@ const ProfilePage = () => {
 
                             <div className='space-y-2'>
                                 <h3 className='font-medium text-gray-500 text-lg'>
-                                    {editMode ? 'Editing ' : ''}{userData?.firstname}'s Information
-                                </h3>                        <div className="grid grid-cols-2 gap-4">
+                                    {currentUserData?.firstname}'s Information
+                                </h3>
+                                <div className="grid grid-cols-2 gap-4">
                                     <label className='text-gray-600 font-medium text-sm uppercase' htmlFor='email'>
                                         Account email:
                                     </label>
@@ -179,53 +52,28 @@ const ProfilePage = () => {
                                         id='email'
                                         type='email'
                                         className='border rounded-md px-2 py-1 text-gray-800 col-span-2'
-                                        value={editMode ? editedEmail : userData?.email}
-                                        readOnly={!editMode} 
-                                        onChange={(e) => setEditedEmail(e.target.value)} 
+                                        value={currentUserData?.email}
                                     />
                                     <label className='text-gray-600 font-medium text-sm uppercase' htmlFor='password'>
                                         Account password:
                                     </label>
                                     <input
                                         id='password'
-                                        type={editMode ? 'text' : 'password'} 
+                                        type={'password'}
                                         className='border rounded-md px-2 py-1 text-gray-800 col-span-2'
-                                        value={editedPassword}
-                                        disabled={!editMode}
+                                        value={""}
                                         placeholder='********'
-
-                                        onChange={(e) => setEditedPassword(e.target.value)}
                                     />
-                                   
+
                                 </div>
                             </div>
 
-                            {editMode ? (
-                                <div className='mt-4'>
-                                    <button
-                                        className='px-4 py-2 bg-blue-500 text-white rounded-md mr-2'
-                                        onClick={handleEditSave}
-                                    >
-                                        Save Changes
-                                    </button>
-                                    <button
-                                        className='px-4 py-2 bg-gray-400 text-white rounded-md'
-                                        onClick={() => {
-                                            setEditMode(false); 
-                                            setEditedEmail(userData.email); 
-                                        }}
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            ) : (
-                                <button
-                                    className='mt-4 px-4 py-2 bg-blue-500 text-white rounded-md'
-                                    onClick={() => setEditMode(true)} 
-                                >
-                                    Edit
-                                </button>
-                            )}
+                            <button
+                                className='mt-4 px-4 py-2 bg-blue-500 text-white rounded-md'
+                                onClick={() => ""}
+                            >
+                                Edit
+                            </button>
 
                         </div>
 
@@ -263,7 +111,7 @@ const ProfilePage = () => {
 
 
                     </div>
-                 
+
 
                 </div>
             </div>

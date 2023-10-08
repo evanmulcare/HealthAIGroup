@@ -1,24 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { getAuth, signOut } from 'firebase/auth'; 
+import { useDispatch } from 'react-redux';
+import { logoutUserAsync } from '../Contexts/actionCreators/authActionCreator';
 
 const ExitScreen = () => {
-
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleLogout = async () => {
-    try {
-      const auth = getAuth();
-      await signOut(auth); 
-      toast.info('Goodbye ;(', {
-        position: 'top-center',
-        autoClose: 2000,
-      });
-      navigate('/signin'); 
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
+  const handleLogoutClick = () => {
+    dispatch(logoutUserAsync());
+    navigate('/signin');
   };
 
   return (
@@ -37,7 +29,7 @@ const ExitScreen = () => {
               <button
                 className="w-1/2 bg-gray-300 text-gray-700 rounded-lg py-2 px-4 hover:bg-gray-400 focus:outline-none focus:ring"
                 onClick={() => {
-                  navigate(-1); 
+                  navigate(-1);
                   toast.info('Great! stay as long as you like :)', {
                     position: 'top-center',
                     autoClose: 2000,
@@ -48,7 +40,7 @@ const ExitScreen = () => {
               </button>
               <button
                 className="w-1/2 bg-blue-500 text-white rounded-lg py-2 px-4 hover:bg-blue-600 focus:outline-none focus:ring"
-                onClick={handleLogout} 
+                onClick={handleLogoutClick}
               >
                 Log Out
               </button>

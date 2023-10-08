@@ -1,39 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { AiFillPlusCircle } from 'react-icons/ai';
-import { db } from '../firebase';
-import { collection, getDocs } from "firebase/firestore";
+import { useDispatch, useSelector } from 'react-redux';
 import NewPatient from '../Components/NewPatient';
 import PatientTile from '../Components/PatientTile';
-
+import { getPatients } from '../Contexts/actionCreators/patientActionCreator';
 const PatientsScreen = () => {
+
     const [showNewPatient, setShowNewPatient] = useState(false);
-    const [patientData, setPatientData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
 
-    const fetchPatientData = async () => {
-        let list = [];
-        try {
-            const querySnapshot = await getDocs(collection(db, "patients"));
-            querySnapshot.forEach((doc) => {
-                const patientData = doc.data();
-                list.push({ id: doc.id, ...patientData });
-
-            });
-            setPatientData(list);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
+    const dispatch = useDispatch();
     useEffect(() => {
-        fetchPatientData();
-    }, []);
+        dispatch(getPatients());
+    }, [dispatch]);
+
+    const selectPatients = (state) => state.patients.patients;
+    const patientData = useSelector(selectPatients);
 
     const handleUpdate = () => {
-        fetchPatientData();
+        dispatch(getPatients());
     };
 
+    const filteredPatients = patientData.filter((patient) =>
+        patient.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div className="h-full  w-full">
@@ -63,9 +54,6 @@ const PatientsScreen = () => {
             </div>
 
             <hr className='mb-4 mt-4' />
-
-
-
             <div className='w-full flex p-5'>
                 <div className="relative flex-auto w-full">
                     <div className="relative">
@@ -89,16 +77,18 @@ const PatientsScreen = () => {
 
             </div>
             <div className='w-full h-full p-5'>
-                <div className='grid grid-cols-2 gap-4 '>
-                    <PatientTile  />
-                    <PatientTile  />
-                    <PatientTile />
-                    <PatientTile  />
-                    <PatientTile  />
-                    <PatientTile  />
-                </div>
+                {filteredPatients.length === 0 ? (
+                    <h1 className="text-2xl text-gray-700 font-semibold">
+                        No Patients
+                    </h1>
+                ) : (
+                    <div className='grid grid-cols-2 gap-4'>
+                        {filteredPatients.map((patient) => (
+                            <PatientTile patient={patient} />
+                        ))}
+                    </div>
+                )}
             </div>
-
         </div>
     )
 }

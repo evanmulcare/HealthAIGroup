@@ -1,22 +1,20 @@
 
-import {BsFillPersonFill} from 'react-icons/bs'
-
-import {FaHandshake, FaUsers, FaFolder, FaRobot} from 'react-icons/fa'
-import { AiFillHome, AiFillUnlock} from 'react-icons/ai'
+import { BsFillPersonFill } from 'react-icons/bs'
+import { FaUsers, FaRobot } from 'react-icons/fa'
+import { AiFillHome, AiFillUnlock } from 'react-icons/ai'
 
 export const links = [
   {
-    
+
     title: 'Dashboard',
     links: [
-    
-    {
-      name: 'Dashboard',
-      icon: <AiFillHome />,
-    }
+
+      {
+        name: 'Dashboard',
+        icon: <AiFillHome />,
+      }
     ],
   },
-
 
   {
     title: 'Patients',
