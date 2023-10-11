@@ -1,18 +1,17 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { ContextProvider } from './Contexts/ContextProvider';
 import { Provider } from 'react-redux';
 import store from './Contexts/provider/store';
-ReactDOM.render(
+import { registerLicense } from '@syncfusion/ej2-base';
+
+registerLicense('ORg4AjUWIQA/Gnt2V1hhQlJAfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hSn5adkFjWnpedHFQQWJV');
+const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
+root.render(
     <Provider store={store}>
-
-        <ContextProvider>
-            <App />
-        </ContextProvider>
+      <App />
     </Provider>
-    ,
-    document.getElementById('root')
-);
-
+  );

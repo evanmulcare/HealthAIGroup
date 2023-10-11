@@ -16,8 +16,6 @@ const ProfilePage = () => {
 
     return (
         <div>
-
-
             <div >
                 <div>
                     <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl grid md:grid-cols-2 gap-4 shadow-lg">
@@ -80,32 +78,7 @@ const ProfilePage = () => {
                     </div>
 
 
-                    <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl flex flex-col md:flex-row justify-start shadow-lg">
-                        <div className="w-full md:w-1/2 space-y-4">
-                            <h3 className='font-medium text-gray-500 text-lg'>Notification Settings</h3>
-
-                            <div className='flex items-center'>
-                                <p className='w-1/3 text-gray-600 font-medium text-sm uppercase'>Push notification</p>
-                                <label className="switch">
-                                    <input type="checkbox" className="toggle-input absolute opacity-0 w-0 h-0" />
-                                    <span className="slider bg-gray-300 dark:bg-gray-600 w-14 h-8 rounded-full flex items-center transition duration-300 ease-in-out">
-                                        <span className="dot w-6 h-6 bg-white dark:bg-gray-300 rounded-full shadow-md transform transition duration-300 ease-in-out"></span>
-                                    </span>
-                                </label>
-                            </div>
-
-                            <div className='flex items-center'>
-                                <p className='w-1/3 text-gray-600 font-medium text-sm uppercase'>Email Notification</p>
-                                <label className="switch">
-                                    <input type="checkbox" className="toggle-input absolute opacity-0 w-0 h-0" />
-                                    <span className="slider bg-gray-300 dark:bg-gray-600 w-14 h-8 rounded-full flex items-center transition duration-300 ease-in-out">
-                                        <span className="dot w-6 h-6 bg-white dark:bg-gray-300 rounded-full shadow-md transform transition duration-300 ease-in-out"></span>
-                                    </span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
+                 
 
                     <div>
 

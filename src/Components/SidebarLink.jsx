@@ -15,7 +15,7 @@ const SidebarLink = ({ links }) => {
   const normalLink = 'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 hover:bg-light-gray m-2' 
   
   return (
-    <div className='ml-3 h-screen overflow-auto pb-10'>
+    <div className='ml-3 '>
       {activeMenu && (
         <>
           <div className='mt-10'>

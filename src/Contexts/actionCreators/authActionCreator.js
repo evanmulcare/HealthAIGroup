@@ -73,7 +73,12 @@ export const signUpWithEmailAndPasswordAsync = (
   email,
   password,
   firstname,
-  lastname
+  lastname,
+  role,
+  profileimg,
+  doctor,
+  patientData,
+
 ) => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -83,11 +88,30 @@ export const signUpWithEmailAndPasswordAsync = (
       const user = userCredential.user;
 
       const userDocRef = doc(db, 'users', user.uid);
-      await setDoc(userDocRef, {
-        firstname: firstname,
-        lastname: lastname,
-        email: email,
-      });
+      if(role == 'patient')
+      {
+        await setDoc(userDocRef, {
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
+          role: role,
+          profileimg: profileimg,
+          doctor: doctor,
+          patientData: patientData
+        });
+      }
+      else
+      {
+        await setDoc(userDocRef, {
+          firstname: firstname,
+          lastname: lastname,
+          email: email,
+          role: role,
+          profileimg: profileimg,
+         
+        });
+      }
+     
 
       await signInWithEmailAndPassword(auth, email, password);
 
