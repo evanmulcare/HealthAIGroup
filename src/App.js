@@ -11,6 +11,7 @@ import {
   HealthAIScreen,
   ProfilePage,
   PatientViewScreen,
+  InvitePatientScreen,
   NoAccessScreen
 } from './Pages';
 import { Navbar } from './Components';
@@ -44,6 +45,7 @@ function App() {
               <>
                 <Route path='/Dashboard' element={<DashboardScreen />} />
                 <Route path='/Patients' element={<PatientsScreen />} />
+                <Route path='/Invite' element={<InvitePatientScreen />} />
                 <Route path='/Patients/:patientId' element={<PatientViewScreen />} />
                 <Route path='/Patients/:category/:folderId' element={<PatientViewScreen />} />
                 <Route path='/file/:fileId' element={<FileComponent />} />

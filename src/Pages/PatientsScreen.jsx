@@ -6,11 +6,13 @@ import NewPatient from '../Components/NewPatient';
 import PatientTile from '../Components/PatientTile';
 import { getPatients } from '../Contexts/actionCreators/patientActionCreator';
 import { getUsers } from '../Contexts/actionCreators/ userActionCreator';
-const PatientsScreen = () => {
+import { Navigate, useNavigate } from 'react-router-dom';
 
-    const [showNewPatient, setShowNewPatient] = useState(false);
+const PatientsScreen = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
     useEffect(() => {
         dispatch(getPatients());
         dispatch(getUsers());
@@ -52,15 +54,6 @@ const PatientsScreen = () => {
 
     return (
         <div >
-            {showNewPatient && (
-                <NewPatient
-                    setShowNewPatient={setShowNewPatient}
-                    showNewPatient={showNewPatient}
-                    handleUpdate={handleUpdate}
-
-                />
-            )}
-
             <div className="flex justify-between w-full pl-5 pr-5 pt-1">
                 <div className='w-full flex p-5'>
                     <div className="relative flex-auto w-full">
@@ -85,9 +78,9 @@ const PatientsScreen = () => {
 
                 </div>                
                 <div className='flex items-center '>
-                    <button className="px-4 py-2 rounded-md border-1 inline-flex bg-blue-500" onClick={() => setShowNewPatient(true)}>
+                    <button className="px-4 py-2 rounded-md border-1 inline-flex bg-blue-500" onClick={() => navigate('/Invite') }>
                         <AiFillPlusCircle className='text-lg mr-2 text-white' />
-                        <h3 className='text-sm text-white font-semibold'>Invites</h3>
+                        <h3 className='text-sm text-white font-semibold'>Invite</h3>
                     </button>
                 </div>
             </div>
