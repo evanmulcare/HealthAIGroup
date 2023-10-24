@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../Contexts/actionCreators/ userActionCreator';
-import { doc, setDoc } from "firebase/firestore"; 
+import { getFirestore, limit, query, where, doc, addDoc, getDoc, getDocs, collection } from "firebase/firestore"; 
 import { db } from "../firebase";
 
 const InvitePatientScreen = () => {
@@ -21,30 +21,64 @@ const InvitePatientScreen = () => {
 
     const handleInvite = async (e) => {
         e.preventDefault();
+        
         try {
-            //if (invite to patient does not yet exist) {
-                await setDoc(doc(db, "patientInvites", "test" /*make this a random doc ID*/), {
-                    senderID: currentUser.uid,
-                    receiverID: receiverID,
-                    message: message
-                });
+            const userDoc = await getDoc(doc(getFirestore(), "users", receiverID));
+            
+            const userInvitesToReceiver = await getDocs(query(collection(getFirestore(), "patientInvites"),
+                // Limit of 1 because we only need evidence of 1 invite.
+                where("senderID", "==", currentUser.uid),
+                where("receiverID", "==", receiverID),
+                limit(1)
+            ));
+            
+            // Check if user hasn't already sent an invite to this patient.
+            if (userInvitesToReceiver.size === 0) {
+                // Check if receiver is a patient.
+                if (userDoc.data().role === "patient") {
+                    await addDoc(collection(db, "patientInvites"), {
+                        senderID: currentUser.uid,
+                        receiverID: receiverID,
+                        message: message
+                    });
 
-                toast.success('Invite successfully sent!', {
+                    // Success toast.
+                    toast.success('Invite successfully sent!', {
+                        position: 'top-center',
+                        autoClose: 3000,
+                    });
+
+                    // Clear input fields.
+                    setReceiverID("");
+                    setMessage("");
+                }
+
+                // If role isn't patient, show toast that patient ID doesn't exist.
+                else {
+                    toast.error('Error: patient ID does not exist.', {
+                        position: 'top-center',
+                        autoClose: 3000,
+                    });
+                }
+            }
+            
+            // If user already invited this patient, show a toast.
+            else {
+                toast.error('Error: already sent an invite to this patient.', {
                     position: 'top-center',
                     autoClose: 3000,
                 });
-            //}
-
-            /*else {
-                toast.error('An invite to this patient already exists...', {
-                    position: 'top-center',
-                    autoClose: 3000,
-                });
-            }*/
+            }
         }
         
         catch (error) {
-          console.error('Error:', error);
+            console.error('Error:', error);
+
+            // If there's an error, it's probably because the user gave an invalid ID. Show a toast.
+            toast.error('Error: Patient ID does not exist...', {
+                position: 'top-center',
+                autoClose: 3000,
+            });
         }
     };
     
@@ -64,6 +98,7 @@ const InvitePatientScreen = () => {
                             type='id'
                             className='border rounded-md px-2 py-1 text-gray-800 col-span-2'
                             placeholder='<ID>'
+                            value={receiverID}
                             onChange = {(e) => setReceiverID(e.target.value)}
                         />
 
@@ -75,6 +110,7 @@ const InvitePatientScreen = () => {
                             type={'message'}
                             className='border rounded-md px-2 py-1 text-gray-800 col-span-2'
                             placeholder='<Message (Optional)>'
+                            value={message}
                             onChange = {(e) => setMessage(e.target.value)}
                         />
                     </div>
