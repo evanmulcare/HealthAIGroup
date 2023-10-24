@@ -55,7 +55,7 @@ const InvitePatientScreen = () => {
 
                 // If role isn't patient, show toast that patient ID doesn't exist.
                 else {
-                    toast.error('Error: patient ID does not exist.', {
+                    toast.error('Error: invalid patient ID.', {
                         position: 'top-center',
                         autoClose: 3000,
                     });
@@ -75,7 +75,7 @@ const InvitePatientScreen = () => {
             console.error('Error:', error);
 
             // If there's an error, it's probably because the user gave an invalid ID. Show a toast.
-            toast.error('Error: Patient ID does not exist...', {
+            toast.error('Error: invalid patient ID.', {
                 position: 'top-center',
                 autoClose: 3000,
             });
