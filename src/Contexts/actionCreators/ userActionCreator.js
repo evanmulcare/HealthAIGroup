@@ -6,14 +6,9 @@ const fetchUsers = (users) => ({
   payload: users,
 });
 
-const setLoading = (isLoading) => ({
-  type: types.SET_LOADING,
-  payload: isLoading,
-});
 
 export const getUsers = () => async (dispatch) => {
   try {
-    dispatch(setLoading(true));
     fire
       .firestore()
       .collection("users")
@@ -27,12 +22,10 @@ export const getUsers = () => async (dispatch) => {
           usersData.push(userWithId);
         });
         dispatch(fetchUsers(usersData));
-        dispatch(setLoading(false));
       })
 
   } catch (error) {
     console.error("Error fetching users: ", error);
-    dispatch(setLoading(false));
   }
 };
 

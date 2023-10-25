@@ -1,2 +1,0 @@
-export const FETCH_PATIENTS = "FETCH_PATIENTS";
-export const SET_LOADING = "SET_LOADING";

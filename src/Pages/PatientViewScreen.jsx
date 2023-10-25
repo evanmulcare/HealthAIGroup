@@ -1,43 +1,35 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { AiOutlineClose } from 'react-icons/ai';
-import MainLayout from '../FileSystem/FileSystemPartials/MainLayout';
+import { AiOutlineArrowLeft } from 'react-icons/ai';
+import MainLayout from '../FileSystem/MainLayout';
 import DefaultProfile from '../Assets/DefaultProfile.png';
-import PatientOverviewPage from '../Components/patientPartials/PatientOverviewPage';
 import PatientRiskPage from '../Components/patientPartials/PatientRiskPage';
+import PatientChat from '../Components/patientPartials/PatientChat';
 
 const PatientViewScreen = () => {
-    const [activeTab, setActiveTab] = useState('overview');
+    const [activeTab, setActiveTab] = useState('risk');
     const navigate = useNavigate();
     const params = useParams();
 
     const patient = useSelector((state) =>
         state.users.users.find((user) => user.docId === params.patientId)
     );
-    
-    const patientWithData = useSelector((state) => {
-        if (patient) {
-            const patientDataId = patient.patientData;
-            const patientDocument = state.patients.patients.find(
-                (patient) => patient.docId === patientDataId
-            );
-
-            if (patientDocument) {
-                return { ...patient, patientDocument };
-            }
-        }
-
-        return patient;
-    });
-
-    console.log("patientWithData", patientWithData);
 
     return (
         <>
             <div className="w-full h-full mx-auto text-gray-700 pt-2">
                 <div className='relative'>
-                    <div className='p-2 flex justify-between'>
+                    <div className='px-2 flex justify-between'>
+
+                        <button
+                            onClick={() => navigate('/patients')}
+                            className="flex items-center bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring rounded-lg px-3 py-2 transition duration-300"
+                        >
+                            <AiOutlineArrowLeft className="mr-2" size={20} />
+                            <span className="text-sm">Back</span>
+                        </button>
+
                         <div className='flex'>
                             <div className="h-12 w-12 rounded-full overflow-hidden">
                                 <img
@@ -58,23 +50,9 @@ const PatientViewScreen = () => {
                             </div>
                         </div>
 
-                        <button
-                            className="px-4 text-gray-500 bg-gray-300 rounded-full opacity-70 mr-4"
-                            onClick={() => ""}
-                        >
-                            <AiOutlineClose className='text-lg' onClick={() => navigate(-1)} />
-                        </button>
                     </div>
                 </div>
                 <div className='flex border-b'>
-                    <button
-                        className={`flex-1 py-2 ${activeTab === 'overview' ? 'border-b-2 border-blue-500' : 'text-gray-500'
-                            }`}
-                        onClick={() => setActiveTab('overview')}
-                    >
-                        Overview
-                    </button>
-
                     <button
                         className={`flex-1 py-2 ${activeTab === 'risk' ? 'border-b-2 border-blue-500' : 'text-gray-500'
                             }`}
@@ -82,6 +60,15 @@ const PatientViewScreen = () => {
                     >
                         Risk Report
                     </button>
+                    <button
+                        className={`flex-1 py-2 ${activeTab === 'chat' ? 'border-b-2 border-blue-500' : 'text-gray-500'
+                            }`}
+                        onClick={() => setActiveTab('chat')}
+                    >
+                        Chat
+                    </button>
+
+
                     <button
                         className={`flex-1 py-2 ${activeTab === 'files' ? 'border-b-2 border-blue-500' : 'text-gray-500'
                             }`}
@@ -91,20 +78,17 @@ const PatientViewScreen = () => {
                     </button>
 
                 </div>
-
-                {activeTab === 'overview' && (
-                    <PatientOverviewPage patient={patientWithData.patientDocument} />
+                {activeTab === 'chat' && (
+                    <PatientChat reciever={patient} />
                 )
-
                 }
-
                 {activeTab === 'files' && (
-                    <MainLayout category={"test"} />
+                    <MainLayout category={params.patientId} />
                 )
                 }
                 {
                     activeTab === 'risk' && (
-                        <PatientRiskPage patient={patientWithData.patientDocument} />
+                        <PatientRiskPage />
                     )
                 }
             </div>

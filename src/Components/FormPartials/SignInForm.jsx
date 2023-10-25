@@ -4,51 +4,50 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPasswordAsync } from '../../Contexts/actionCreators/authActionCreator';
 import { getUsers } from '../../Contexts/actionCreators/ userActionCreator';
-
 const SignInForm = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-    useEffect(() => {
-      dispatch(getUsers());
-    }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+
+  const selectUsers = (state) => state.users.users;
+  const userData = useSelector(selectUsers);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
   
-    const selectUsers = (state) => state.users.users;
-    const userData = useSelector(selectUsers);
-    const currentUser = useSelector((state) => state.auth.currentUser);
-    const currentUserData = userData.find(user => user.docId === currentUser?.uid);
-
-    const handleLogin = async (e) => {
-        e.preventDefault();
-      
-        if (!email || !password) {
-          toast.error('Please fill in both email and password fields.', {
-            position: 'top-center',
-            autoClose: 2000,
-          });
-          return;
-        }
-      
-        try {
-          await dispatch(signInWithEmailAndPasswordAsync(email, password));
-      
-      
-            navigate('/Dashboard');
-       
-        } catch (error) {
-          console.error('Error signing in:', error);
-        }
-      };
-      
-
-
+    if (!email || !password) {
+      toast.error('Please fill in both email and password fields.', {
+        position: 'top-center',
+        autoClose: 2000,
+      });
+      return;
+    }
+  
+    try {
+      const result = await dispatch(signInWithEmailAndPasswordAsync(email, password, userData));
+      if (result.success) {
+        navigate('/dashboard');
+        toast.success(`Welcome Doctor!`, {
+          position: 'top-center',
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      console.error('Error signing in:', error);
+    }
+  }
+    
+    
     return (
         <div className="w-full max-w-md py-5">
             <p className="font-semibold text-lg text-gray-500 text-center mb-4">Please Log in to continue</p>
-            <p className="font-semibold text-sm text-gray-600 text-center mb-4">LOGIN: email: johndoe@gmail.com, password: Password.123</p>
 
             <form onSubmit={handleLogin}>
                 <input

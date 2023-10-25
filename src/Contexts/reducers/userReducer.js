@@ -2,7 +2,6 @@ import * as types from "../actionTypes/userActionTypes";
 
 const initialState = {
   users: [],
-  isLoading: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -11,11 +10,6 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         users: action.payload,
-      };
-    case types.SET_LOADING:
-      return {
-        ...state,
-        isLoading: action.payload,
       };
     default:
       return state;

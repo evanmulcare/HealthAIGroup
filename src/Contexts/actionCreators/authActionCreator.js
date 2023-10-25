@@ -17,36 +17,38 @@ export const registerUser = (user) => ({
   payload: user,
 });
 
-export const signInWithEmailAndPasswordAsync = (email, password) => (dispatch) => {
-  return new Promise((resolve, reject) => {
+//Handle user login
+//Promise used to easily handle success / failure with resolve and reject, if it is rejected the user wont be redirected to dashboard
+export const signInWithEmailAndPasswordAsync = (email, password, userData) => (dispatch) => {
+  return new Promise(async (resolve, reject) => {
     try {
       const auth = getAuth();
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      const currentUserData = userData.find((data) => data.docId === user.uid);
+      const role = currentUserData?.role;
 
-          dispatch(loginUser(user));
-          toast.success('Welcome, Login successfully', {
-            position: 'top-center',
-            autoClose: 2000,
-          });
-
-          resolve({ success: true });
-        })
-        .catch((error) => {
-          toast.error('Error logging in. Please check your credentials.', {
-            position: 'top-center',
-            autoClose: 2000,
-          });
-
-          reject({ success: false, error: error.message });
+      if (role === 'doctor') {
+        dispatch(loginUser(user));
+        resolve({ success: true, user });
+      } else {
+        toast.error('Patients cannot access the Web resources.', {
+          position: 'top-center',
+          autoClose: 2000,
         });
+
+        reject({ success: false });
+      }
     } catch (error) {
-      console.error('Error logging in:', error);
-      reject({ success: false, error: error.message });
+      toast.error('Invalid Login Credentials.', {
+        position: 'top-center',
+        autoClose: 2000,
+      });
+      reject({ success: false});
     }
   });
 };
+
 
 export const logoutUserAsync = () => (dispatch) => {
   try {
@@ -76,9 +78,7 @@ export const signUpWithEmailAndPasswordAsync = (
   lastname,
   role,
   profileimg,
-  doctor,
-  patientData,
-
+  doctor
 ) => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -88,36 +88,29 @@ export const signUpWithEmailAndPasswordAsync = (
       const user = userCredential.user;
 
       const userDocRef = doc(db, 'users', user.uid);
-      if(role == 'patient')
-      {
+      if (role == 'patient') {
         await setDoc(userDocRef, {
+          // If the user's role is 'patient', add a doctor reference
           firstname: firstname,
           lastname: lastname,
           email: email,
           role: role,
           profileimg: profileimg,
           doctor: doctor,
-          patientData: patientData
         });
       }
-      else
-      {
+      else {
         await setDoc(userDocRef, {
           firstname: firstname,
           lastname: lastname,
           email: email,
           role: role,
           profileimg: profileimg,
-         
+
         });
       }
-     
 
-      await signInWithEmailAndPassword(auth, email, password);
-
-      dispatch(loginUser(user));
-
-      toast.success('Registration and login successful.', {
+      toast.success('Registration successful. You can now login through the login area (If you are A doctor)', {
         position: 'top-center',
         autoClose: 2000,
       });

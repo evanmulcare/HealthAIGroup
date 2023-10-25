@@ -8,6 +8,7 @@ import { storage } from '../../firebase';
 import Select from 'react-select';
 import { getUsers } from '../../Contexts/actionCreators/ userActionCreator';
 
+//Used in the login screen
 const RegisterForm = () => {
 
   const [fileURL, setfileURL] = useState('');
@@ -69,7 +70,6 @@ const RegisterForm = () => {
       doctor: selectedOption.value,
     });
   };
-  
 
   const [input, setInput] = useState({
     email: '',
@@ -78,19 +78,7 @@ const RegisterForm = () => {
     lastname: '',
     permissions: '',
     doctor:  '',
-    patientData: '',
   });
-
-  const clearState = () => {
-    setInput({
-      firstname: '',
-      lastname: '',
-      email: '',
-      organization: '',
-      permissions: '',
-      password: '',
-    });
-  };
 
   useEffect(() => {
     const uploadFile = () => {
@@ -102,18 +90,10 @@ const RegisterForm = () => {
       uploadTask.on(
         'state_changed',
         (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
-          switch (snapshot.state) {
-            case 'paused':
-              console.log('Upload is paused');
-              break;
-            case 'running':
-              console.log('Upload is running');
-              break;
-            default:
-              break;
-          }
+          const progress = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          toast.info(`Uploading File: ${progress}%`);
         },
         (error) => {
           toast.error("Error: " + error, {
@@ -143,8 +123,8 @@ const RegisterForm = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await dispatch(signUpWithEmailAndPasswordAsync(input.email, input.password, input.firstname, input.lastname, input.permissions, fileURL, input.doctor, input.patientData));
-      navigate('/Dashboard')
+      await dispatch(signUpWithEmailAndPasswordAsync(input.email, input.password, input.firstname, input.lastname, input.permissions, fileURL, input.doctor));
+     
     } catch (error) {
       console.error('Error registering and logging in:', error);
     }

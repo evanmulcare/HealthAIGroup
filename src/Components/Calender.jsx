@@ -1,9 +1,22 @@
-import React from 'react';
+import { useState } from 'react';
 import Calendar from 'react-calendar';
-import { useDate } from '../Hooks/useDate';
 
 const Calender = () => {
-    const { selectedDate, handleDateChange, isToday } = useDate();
+    const [selectedDate, setSelectedDate] = useState(new Date());
+
+    const handleDateChange = (date) => {
+      setSelectedDate(date);
+    };
+  
+    const isToday = (date) => {
+      const today = new Date();
+      return (
+        date.getDate() === today.getDate() &&
+        date.getMonth() === today.getMonth() &&
+        date.getFullYear() === today.getFullYear()
+      );
+    };
+
     
   return (
     <div className='w-full rounded-lg shadow-md p-4 border border-gray-300 bg-white'>

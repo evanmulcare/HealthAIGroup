@@ -1,4 +1,4 @@
-
+//Links for Navbar with there corrosponding icons
 import { BsFillPersonFill } from 'react-icons/bs'
 import { FaUsers, FaRobot } from 'react-icons/fa'
 import { AiFillHome, AiFillUnlock } from 'react-icons/ai'

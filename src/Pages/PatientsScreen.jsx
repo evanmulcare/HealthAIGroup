@@ -1,66 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { AiFillPlusCircle } from 'react-icons/ai';
-import { useDispatch, useSelector } from 'react-redux';
-import NewPatient from '../Components/NewPatient';
-import PatientTile from '../Components/PatientTile';
-import { getPatients } from '../Contexts/actionCreators/patientActionCreator';
-import { getUsers } from '../Contexts/actionCreators/ userActionCreator';
+import { useSelector } from 'react-redux';
+import PatientTile from '../Components/patientPartials/PatientTile';
+
 const PatientsScreen = () => {
-
-    const [showNewPatient, setShowNewPatient] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
-    const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(getPatients());
-        dispatch(getUsers());
 
-    }, [dispatch]);
+  const users = useSelector((state) => state.users.users);
+  const currentUser = useSelector((state) => state.auth.currentUser);
 
-    const selectPatients = (state) => state.patients.patients;
-    const patientData = useSelector(selectPatients);
-
-    const selectUsers = (state) => state.users.users;
-    const currentUser = useSelector((state) => state.auth.currentUser);
-
-    const doctorsPatientsWithPatientsData = useSelector((state) => {
-        const users = selectUsers(state);
-        const filteredUsers = users.filter(user => user?.role === 'patient' && user?.doctor === currentUser.uid);
-
-        const usersWithPatientsData = filteredUsers.map(user => {
-            const patientDataId = user.patientData;
-            const patientDocument = patientData.find(patient => patient.docId === patientDataId);
-
-            if (patientDocument) {
-                return { ...user, patientDocument };
-            }
-
-            return user;
-        });
-
-        return usersWithPatientsData;
+    // filter and retrieve a list of patients managed by the 'currentUser' doctor
+    const doctorsPatients = useSelector((state) => {
+        return users.filter(user => user?.role === 'patient' && user?.doctor === currentUser.uid);
     });
 
-
-    const handleUpdate = () => {
-        dispatch(getPatients());
-    };
-
-    const filteredPatients = doctorsPatientsWithPatientsData.filter((patient) =>
+    // Filter the list of patients based on the search term entered 
+    const filteredPatients = doctorsPatients.filter((patient) =>
     patient.firstname.toLowerCase().includes(searchTerm.toLowerCase()) || patient.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||  patient.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
     return (
         <div >
-            {showNewPatient && (
-                <NewPatient
-                    setShowNewPatient={setShowNewPatient}
-                    showNewPatient={showNewPatient}
-                    handleUpdate={handleUpdate}
-
-                />
-            )}
-
             <div className="flex justify-between w-full pl-5 pr-5 pt-1">
                 <div className='w-full flex p-5'>
                     <div className="relative flex-auto w-full">
@@ -85,7 +46,7 @@ const PatientsScreen = () => {
 
                 </div>                
                 <div className='flex items-center '>
-                    <button className="px-4 py-2 rounded-md border-1 inline-flex bg-blue-500" onClick={() => setShowNewPatient(true)}>
+                    <button className="px-4 py-2 rounded-md border-1 inline-flex bg-blue-500">
                         <AiFillPlusCircle className='text-lg mr-2 text-white' />
                         <h3 className='text-sm text-white font-semibold'>Invites</h3>
                     </button>
@@ -102,7 +63,7 @@ const PatientsScreen = () => {
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         {filteredPatients.map((patient) => (
                             <div key={patient.id}>
-                                <PatientTile patient={patient} patientData={patient.patientDocument} />
+                                <PatientTile patient={patient} />
                             </div>
                         ))}
                     </div>

@@ -4,7 +4,7 @@ import SignInForm from '../Components/FormPartials/SignInForm';
 
 const LoginScreen = () => {
   const [activeTab, setActiveTab] = useState('login');
-  
+
   return (
     <div className="fixed left-0 top-0 w-full h-full bg-gray-50 flex justify-center items-center">
       <div className="w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 h-3/4 flex flex-col p-5 bg-white rounded-3xl shadow-md overflow-y-scroll">
@@ -34,7 +34,7 @@ const LoginScreen = () => {
 
           {activeTab === 'login' && (
 
-          <SignInForm/>
+            <SignInForm />
           )
 
           }

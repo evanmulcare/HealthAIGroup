@@ -1,32 +1,29 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 import {
   DashboardScreen,
   PatientsScreen,
   LoginScreen,
   ExitScreen,
-  HealthAIScreen,
   ProfilePage,
   PatientViewScreen,
-  NoAccessScreen
+  ChatbotScreen
 } from './Pages';
-import { Navbar } from './Components';
-import FileComponent from './FileSystem/FileSystemPartials/FileComponent';
-import { getUsers } from './Contexts/actionCreators/ userActionCreator';
+
+import Navbar from './Components/Navbar';
+import FileComponent from './FileSystem/FileComponent';
 
 function App() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
 
-  const selectUsers = (state) => state.users.users;
-  const userData = useSelector(selectUsers);
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const currentUserData = userData.find(user => user.docId === currentUser?.uid);
+  
+  const RequireAuth = ({ children }) => {
+    return currentUser ? children : <Navigate to='/signin' />;
+  };
 
   return (
     <div>
@@ -38,22 +35,17 @@ function App() {
             <Route path='/' element={<Navigate to='/signin' />} />
 
             <Route path='/signin' element={<LoginScreen />} />
+        
+            <Route path='/Dashboard' element={<RequireAuth><DashboardScreen /></RequireAuth>} />
+            <Route path='/Patients' element={<RequireAuth><PatientsScreen /></RequireAuth>} />
+            <Route path='/Patients/:patientId' element={<RequireAuth><PatientViewScreen /></RequireAuth>} />
+            <Route path='/Patients/:patientId/:category/:folderId' element={<RequireAuth><PatientViewScreen /></RequireAuth>} />
+            <Route path='/file/:fileId' element={<RequireAuth><FileComponent /></RequireAuth>} />
+            <Route path='/HealthAI' element={<RequireAuth><ChatbotScreen /></RequireAuth>} />
+            <Route path='/Profile' element={<RequireAuth><ProfilePage /></RequireAuth>} />
+            <Route path='/Exit' element={<RequireAuth><ExitScreen /></RequireAuth>} />
 
-
-            {currentUser && currentUserData && currentUserData.role === 'doctor' && (
-              <>
-                <Route path='/Dashboard' element={<DashboardScreen />} />
-                <Route path='/Patients' element={<PatientsScreen />} />
-                <Route path='/Patients/:patientId' element={<PatientViewScreen />} />
-                <Route path='/Patients/:category/:folderId' element={<PatientViewScreen />} />
-                <Route path='/file/:fileId' element={<FileComponent />} />
-                <Route path='/HealthAI' element={<HealthAIScreen />} />
-                <Route path='/Profile' element={<ProfilePage />} />
-                <Route path='/Exit' element={<ExitScreen />} />
-              </>
-            )}
-            <Route path='/no-access' element={<NoAccessScreen />} />
-            <Route path='*' element={<Navigate to='/' />} />
+            <Route path='*' element={<LoginScreen />} />
           </Routes>
         </div>
       </BrowserRouter>

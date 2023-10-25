@@ -20,6 +20,6 @@ export default fire;
 
 const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth();
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+export const auth = getAuth(); //export Firebase Authentication 
+export const db = getFirestore(app); //export Firebase Firestore 
+export const storage = getStorage(app); //export Firebase Storage
