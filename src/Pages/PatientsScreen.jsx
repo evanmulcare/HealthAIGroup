@@ -3,9 +3,11 @@ import { BsSearch } from 'react-icons/bs';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import PatientTile from '../Components/patientPartials/PatientTile';
+import { useNavigate } from 'react-router-dom';
 
 const PatientsScreen = () => {
     const [searchTerm, setSearchTerm] = useState("");
+    const navigate = useNavigate();
 
   const users = useSelector((state) => state.users.users);
   const currentUser = useSelector((state) => state.auth.currentUser);
@@ -46,9 +48,9 @@ const PatientsScreen = () => {
 
                 </div>                
                 <div className='flex items-center '>
-                    <button className="px-4 py-2 rounded-md border-1 inline-flex bg-blue-500">
+                    <button className="px-4 py-2 rounded-md border-1 inline-flex bg-blue-500" onClick={() => navigate('/Invite') }>
                         <AiFillPlusCircle className='text-lg mr-2 text-white' />
-                        <h3 className='text-sm text-white font-semibold'>Invites</h3>
+                        <h3 className='text-sm text-white font-semibold'>Invite</h3>
                     </button>
                 </div>
             </div>
