@@ -23,9 +23,9 @@ const InvitePatientScreen = () => {
         e.preventDefault();
         
         try {
-            const userDoc = await getDoc(doc(getFirestore(), "users", receiverID));
+            const userDoc = await getDoc(doc(db, "users", receiverID));
             
-            const userInvitesToReceiver = await getDocs(query(collection(getFirestore(), "patientInvites"),
+            const userInvitesToReceiver = await getDocs(query(collection(db, "patientInvites"),
                 // Limit of 1 because we only need evidence of 1 invite.
                 where("senderID", "==", currentUser.uid),
                 where("receiverID", "==", receiverID),
