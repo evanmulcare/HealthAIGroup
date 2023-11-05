@@ -82,6 +82,24 @@ const InvitePatientScreen = () => {
             });
         }
     };
+
+    const getOutgoingInvites = async (e) => {
+        const invitesDict = {};
+
+        const userInvites = await getDocs(query(collection(db, "patientInvites"),
+            where("senderID", "==", currentUser.uid),
+        ));
+        
+        userInvites.forEach(async invite => {
+            const key = invite.data().receiverID;
+            const invitedUserDocData = (await getDoc(doc(db, "users", key))).data();
+            
+            invitesDict[key] = String(invitedUserDocData.firstname + " " + invitedUserDocData.lastname);
+        });
+
+        console.log(invitesDict)
+        return invitesDict;
+    }
     
     return (
         <div>
@@ -135,6 +153,12 @@ const InvitePatientScreen = () => {
                             <InviteTile patient={patient} />
                         </div>
                     ))}*/}
+                    {console.log(getOutgoingInvites()[1])}
+                    {Object.entries(getOutgoingInvites()).map(([key, value]) => (
+                        <div key={key}>
+                            <InviteTile id={key} name={value} />
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

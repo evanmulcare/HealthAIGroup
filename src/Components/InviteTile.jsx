@@ -1,9 +1,6 @@
 import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const InviteTile = ({ patient }) => {
-  const navigate = useNavigate();
-
+const InviteTile = ({ id, name }) => {
   const tileRef = useRef(null);
 
   return (
@@ -13,9 +10,9 @@ const InviteTile = ({ patient }) => {
           <div className="text-xl font-semibold text-gray-800">
             <div className="text-left">
               <h2 className="text-xl md:text-2xl font-semibold text-gray-800 text-left">
-                {patient?.firstname} {patient?.lastname}
+                {name}
               </h2>
-              <h3 className="text-sm text-gray-500 md:text-gray-400">ID: {patient?.docId}</h3>
+              <h3 className="text-sm text-gray-500 md:text-gray-400">ID: {id}</h3>
             </div>
           </div>
         </div>
