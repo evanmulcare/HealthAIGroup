@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../Contexts/actionCreators/ userActionCreator';
-import { getFirestore, limit, query, where, doc, addDoc, getDoc, getDocs, collection } from "firebase/firestore"; 
+import { limit, query, where, doc, addDoc, getDoc, getDocs, collection } from "firebase/firestore"; 
 import { db } from "../firebase";
+import InviteTile from '../Components/InviteTile';
 
 const InvitePatientScreen = () => {
 
@@ -25,8 +26,8 @@ const InvitePatientScreen = () => {
         try {
             const userDoc = await getDoc(doc(db, "users", receiverID));
             
+            // Limit of 1 because we only need evidence of 1 invite.
             const userInvitesToReceiver = await getDocs(query(collection(db, "patientInvites"),
-                // Limit of 1 because we only need evidence of 1 invite.
                 where("senderID", "==", currentUser.uid),
                 where("receiverID", "==", receiverID),
                 limit(1)
@@ -83,45 +84,58 @@ const InvitePatientScreen = () => {
     };
     
     return (
-        <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl grid md:grid-cols-2 gap-4 shadow-lg">
-            <div className="flex flex-col justify-between mt-4 md:mt-0 md:ml-4">
-                <div className='space-y-2'>
-                    <h3 className='font-medium text-gray-500 text-lg'>
-                        Invite a patient
-                    </h3>
-                    <div className="grid grid-cols-2 gap-4">
-                        <label className='text-gray-600 font-medium text-sm uppercase' htmlFor='id'>
-                            Patient's ID:
-                        </label>
-                        <input
-                            id='id'
-                            type='id'
-                            className='border rounded-md px-2 py-1 text-gray-800 col-span-2'
-                            placeholder='<ID>'
-                            value={receiverID}
-                            onChange = {(e) => setReceiverID(e.target.value)}
-                        />
+        <div>
+            <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl grid md:grid-cols-2 gap-4 shadow-lg">
+                <div className="flex flex-col justify-between mt-4 md:mt-0 md:ml-4">
+                    <div className='space-y-2'>
+                        <h3 className='font-medium text-gray-500 text-lg'>
+                            Invite a patient
+                        </h3>
+                        <div className="grid grid-cols-2 gap-4">
+                            <label className='text-gray-600 font-medium text-sm uppercase' htmlFor='id'>
+                                Patient's ID:
+                            </label>
+                            <input
+                                id='id'
+                                type='id'
+                                className='border rounded-md px-2 py-1 text-gray-800 col-span-2'
+                                placeholder='ID...'
+                                value={receiverID}
+                                onChange = {(e) => setReceiverID(e.target.value)}
+                            />
 
-                        <label className='text-gray-600 font-medium text-sm uppercase' htmlFor='message'>
-                            Message:
-                        </label>
-                        <textarea
-                            id='message'
-                            type={'message'}
-                            className='border rounded-md px-2 py-1 text-gray-800 col-span-2'
-                            placeholder='<Message (Optional)>'
-                            value={message}
-                            onChange = {(e) => setMessage(e.target.value)}
-                        />
+                            <label className='text-gray-600 font-medium text-sm uppercase' htmlFor='message'>
+                                Message (Optional):
+                            </label>
+                            <textarea
+                                id='message'
+                                type={'message'}
+                                className='border rounded-md px-2 py-1 text-gray-800 col-span-2'
+                                placeholder='Message...'
+                                value={message}
+                                onChange = {(e) => setMessage(e.target.value)}
+                            />
+                        </div>
                     </div>
-                </div>
 
-                <button
-                    className='mt-4 px-4 py-2 bg-blue-500 text-white rounded-md'
-                    onClick={handleInvite}
-                >
-                    Send invite
-                </button>
+                    <button
+                        className='mt-4 px-4 py-2 bg-blue-500 text-white rounded-md'
+                        onClick={handleInvite}
+                    >
+                        Send Invite
+                    </button>
+                </div>
+            </div>
+
+            <div className='w-full h-full p-5'>
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                    {/* CREATE INVITE TILES HERE WITH SOME INVITE INFO + PATIENT NAME */}
+                    {/*{filteredPatients.map((patient) => (
+                        <div key={patient.id}>
+                            <InviteTile patient={patient} />
+                        </div>
+                    ))}*/}
+                </div>
             </div>
         </div>
     );
