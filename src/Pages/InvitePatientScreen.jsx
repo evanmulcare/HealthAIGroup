@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../Contexts/actionCreators/ userActionCreator';
-import { limit, query, where, doc, addDoc, getDoc, getDocs, collection } from "firebase/firestore"; 
+import { doc, addDoc, getDoc, collection } from "firebase/firestore";
 import { db } from "../firebase";
 import InviteTile from '../Components/InviteTile';
+import fire from "../firebase";
 
 const InvitePatientScreen = () => {
 
@@ -13,45 +14,88 @@ const InvitePatientScreen = () => {
     //const [senderID, setSenderID] = useState('');
     const [receiverID, setReceiverID] = useState('');
     const [message, setMessage] = useState('');
+    const [outgoingInvites, setOutgoingInvites] = useState([]);
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getUsers());
-    }, [dispatch]);
+    
+        const fetchOutgoingInvites = async () => {
+            const invitesArray = await getOutgoingInvites();
 
+            setOutgoingInvites(invitesArray);
+        };
+    
+        fetchOutgoingInvites();
+    }, [dispatch, currentUser]);
+
+    const getOutgoingInvites = async () => {
+        try {
+            const invitesData = [];
+
+            const invites = await fire.firestore().collection("patientInvites")
+                .where('senderID', '==', currentUser.uid)
+                .get();
+    
+            invites.forEach((invite) => {
+                const inviteData = invite.data();
+                const inviteId = invite.id;
+                const inviteWithId = { ...inviteData, docId: inviteId };
+                invitesData.push(inviteWithId);
+            });
+    
+            return invitesData;
+        }
+        
+        catch (error) {
+            console.error("Error fetching invites: ", error);
+            return [];
+        }
+    };
+    
     const handleInvite = async (e) => {
         e.preventDefault();
-        
+
         try {
             const userDoc = await getDoc(doc(db, "users", receiverID));
             
             // Limit of 1 because we only need evidence of 1 invite.
-            const userInvitesToReceiver = await getDocs(query(collection(db, "patientInvites"),
-                where("senderID", "==", currentUser.uid),
-                where("receiverID", "==", receiverID),
-                limit(1)
-            ));
-            
+            const userInvitesToReceiver = await fire.firestore().collection("patientInvites")
+                .where("senderID", "==", currentUser.uid)
+                .where("receiverID", "==", receiverID)
+                .limit(1)
+                .get();
+
             // Check if user hasn't already sent an invite to this patient.
             if (userInvitesToReceiver.size === 0) {
                 // Check if receiver is a patient.
                 if (userDoc.data().role === "patient") {
-                    await addDoc(collection(db, "patientInvites"), {
-                        senderID: currentUser.uid,
-                        receiverID: receiverID,
-                        message: message
-                    });
+                    if (userDoc.data().doctor !== currentUser.uid) {
+                        await addDoc(collection(db, "patientInvites"), {
+                            senderID: currentUser.uid,
+                            receiverID: receiverID,
+                            message: message
+                        });
 
-                    // Success toast.
-                    toast.success('Invite successfully sent!', {
-                        position: 'top-center',
-                        autoClose: 3000,
-                    });
+                        // Success toast.
+                        toast.success('Invite successfully sent!', {
+                            position: 'top-center',
+                            autoClose: 3000,
+                        });
 
-                    // Clear input fields.
-                    setReceiverID("");
-                    setMessage("");
+                        // Clear input fields.
+                        setReceiverID("");
+                        setMessage("");
+                    }
+
+                    // In case this patient is already on this doctor's patient list.
+                    else {
+                        toast.warning('Patient already on your list.', {
+                            position: 'top-center',
+                            autoClose: 3000,
+                        });
+                    }
                 }
 
                 // If role isn't patient, show toast that patient ID doesn't exist.
@@ -62,16 +106,16 @@ const InvitePatientScreen = () => {
                     });
                 }
             }
-            
+
             // If user already invited this patient, show a toast.
             else {
-                toast.error('Error: already sent an invite to this patient.', {
+                toast.warning('Already invited this patient.', {
                     position: 'top-center',
                     autoClose: 3000,
                 });
             }
         }
-        
+
         catch (error) {
             console.error('Error:', error);
 
@@ -82,24 +126,6 @@ const InvitePatientScreen = () => {
             });
         }
     };
-
-    const getOutgoingInvites = async (e) => {
-        const invitesDict = {};
-
-        const userInvites = await getDocs(query(collection(db, "patientInvites"),
-            where("senderID", "==", currentUser.uid),
-        ));
-        
-        userInvites.forEach(async invite => {
-            const key = invite.data().receiverID;
-            const invitedUserDocData = (await getDoc(doc(db, "users", key))).data();
-            
-            invitesDict[key] = String(invitedUserDocData.firstname + " " + invitedUserDocData.lastname);
-        });
-
-        console.log(invitesDict)
-        return invitesDict;
-    }
     
     return (
         <div>
@@ -119,7 +145,7 @@ const InvitePatientScreen = () => {
                                 className='border rounded-md px-2 py-1 text-gray-800 col-span-2'
                                 placeholder='ID...'
                                 value={receiverID}
-                                onChange = {(e) => setReceiverID(e.target.value)}
+                                onChange={(e) => setReceiverID(e.target.value)}
                             />
 
                             <label className='text-gray-600 font-medium text-sm uppercase' htmlFor='message'>
@@ -131,7 +157,7 @@ const InvitePatientScreen = () => {
                                 className='border rounded-md px-2 py-1 text-gray-800 col-span-2'
                                 placeholder='Message...'
                                 value={message}
-                                onChange = {(e) => setMessage(e.target.value)}
+                                onChange={(e) => setMessage(e.target.value)}
                             />
                         </div>
                     </div>
@@ -145,18 +171,11 @@ const InvitePatientScreen = () => {
                 </div>
             </div>
 
-            <div className='w-full h-full p-5'>
+            <div className='px-10 w-full h-full'>
                 <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                    {/* CREATE INVITE TILES HERE WITH SOME INVITE INFO + PATIENT NAME */}
-                    {/*{filteredPatients.map((patient) => (
-                        <div key={patient.id}>
-                            <InviteTile patient={patient} />
-                        </div>
-                    ))}*/}
-                    {console.log(getOutgoingInvites()[1])}
-                    {Object.entries(getOutgoingInvites()).map(([key, value]) => (
-                        <div key={key}>
-                            <InviteTile id={key} name={value} />
+                    {outgoingInvites.map((invite) => (
+                        <div key={invite.docId}>
+                            <InviteTile invitedPatient={invite} />
                         </div>
                     ))}
                 </div>
