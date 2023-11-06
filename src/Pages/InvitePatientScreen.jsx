@@ -168,7 +168,7 @@ const InvitePatientScreen = () => {
                     {outgoingInvites.map((invite) => (
                         <div key={invite.docId}>
                             {console.log("testy" , invite.receiverID)}
-                            <InviteTile patient={invite.receiverID} />
+                            <InviteTile invitedPatient={invite.receiverID} />
                         </div>
                     ))}
                    

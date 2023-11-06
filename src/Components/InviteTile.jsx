@@ -1,12 +1,12 @@
-import React, { useRef } from 'react';
+import React  from 'react';
 import { useSelector } from 'react-redux';
 
-const InviteTile = ({ patient }) => {
-  const tileRef = useRef(null);
+const InviteTile = ({ invitedPatient }) => {
   const users = useSelector((state) => state.users.users);
-  const invitedUser = users.find((user) => user.docId === patient);
+  const invitedUser = users.find((user) => user.docId === invitedPatient);
+
   return (
-    <div className="rounded-lg w-full h-full border shadow-lg p-4 bg-white" ref={tileRef}>
+    <div className="rounded-lg w-full h-full border shadow-lg p-4 bg-white">
       <div className="flex flex-col md:flex-row justify-between items-center">
         <div className="flex items-center">
           <div className="text-xl font-semibold text-gray-800">
