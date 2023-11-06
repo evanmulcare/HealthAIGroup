@@ -6,8 +6,8 @@ import fire from "../firebase";
 const InviteTile = ({ invitedPatient }) => {
 	const users = useSelector((state) => state.users.users);
 	const invitedUser = users.find((user) => user.docId === invitedPatient.receiverID);
-
-	const cancelInvite = async (e) => {
+    
+	const cancelInvite = async () => {
 		try {
 			// Remove document from database.
 			await fire.firestore().collection("patientInvites")

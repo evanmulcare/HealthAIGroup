@@ -72,11 +72,17 @@ const InvitePatientScreen = () => {
                 // Check if receiver is a patient.
                 if (userDoc.data().role === "patient") {
                     if (userDoc.data().doctor !== currentUser.uid) {
-                        await addDoc(collection(db, "patientInvites"), {
+                        const newInviteRef = await addDoc(collection(db, "patientInvites"), {
                             senderID: currentUser.uid,
                             receiverID: receiverID,
                             message: message
                         });
+                        
+                        // Get the newly sent invite.
+                        const newInviteDoc = await getDoc(newInviteRef);
+
+                        // Display newly sent invite in the outgoing invites list.
+                        setOutgoingInvites([...outgoingInvites, {...newInviteDoc.data(), docId: newInviteDoc.id}]);
 
                         // Success toast.
                         toast.success('Invite successfully sent!', {
@@ -163,7 +169,7 @@ const InvitePatientScreen = () => {
                     </div>
 
                     <button
-                        className='mt-4 px-4 py-2 bg-blue-500 text-white rounded-md'
+                        className='mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition duration-300'
                         onClick={handleInvite}
                     >
                         Send Invite
