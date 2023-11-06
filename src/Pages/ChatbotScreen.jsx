@@ -13,7 +13,7 @@ import Robot from '../Assets/roboto.jpeg';
 import { useSelector } from 'react-redux';
 
 const Chatbot = () => {
-    const API_KEY = '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'; //CHATGPT API KEY
+    const API_KEY = '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'; //CHATGPT API KEY
     
     const users = useSelector((state) => state.users.users);
     const currentUser = useSelector((state) => state.auth.currentUser);
@@ -60,7 +60,7 @@ const Chatbot = () => {
       //always give chatGPT the prompt tpo act as a medical assistant , giving approiate medical advice disclaimers
       const roleplayPrompt = {
         role: 'system',
-        content: 'Speak like you are a medical professional giving assistance to a patient. (Give appropriate disclaimers about advice)',
+        content: 'Speak like you are a medical professional giving assistance to a doctor. (Give appropriate disclaimers about advice)',
       };
   
       const apiRequestBody = {

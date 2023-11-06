@@ -3,12 +3,13 @@ import { BsSearch } from 'react-icons/bs';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import PatientTile from '../Components/patientPartials/PatientTile';
+import { useNavigate } from 'react-router-dom';
 
 const PatientsScreen = () => {
     const [searchTerm, setSearchTerm] = useState("");
-
-  const users = useSelector((state) => state.users.users);
-  const currentUser = useSelector((state) => state.auth.currentUser);
+    const navigate = useNavigate();
+    const users = useSelector((state) => state.users.users);
+    const currentUser = useSelector((state) => state.auth.currentUser);
 
     // filter and retrieve a list of patients managed by the 'currentUser' doctor
     const doctorsPatients = useSelector((state) => {
@@ -17,8 +18,9 @@ const PatientsScreen = () => {
 
     // Filter the list of patients based on the search term entered 
     const filteredPatients = doctorsPatients.filter((patient) =>
-    patient.firstname.toLowerCase().includes(searchTerm.toLowerCase()) || patient.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||  patient.email.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+        patient.firstname.toLowerCase().includes(searchTerm.toLowerCase())
+        || patient.lastname.toLowerCase().includes(searchTerm.toLowerCase()) || patient.email.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     return (
         <div >
@@ -44,9 +46,9 @@ const PatientsScreen = () => {
                     </div>
 
 
-                </div>                
+                </div>
                 <div className='flex items-center '>
-                    <button className="px-4 py-2 rounded-md border-1 inline-flex bg-blue-500">
+                    <button className="px-4 py-2 rounded-md border-1 inline-flex bg-blue-500" onClick={() => navigate('/invite')}>
                         <AiFillPlusCircle className='text-lg mr-2 text-white' />
                         <h3 className='text-sm text-white font-semibold'>Invites</h3>
                     </button>

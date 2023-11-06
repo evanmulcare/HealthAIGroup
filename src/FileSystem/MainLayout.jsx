@@ -9,7 +9,6 @@ import Breadcrumb from './Breadcrumb';
 const MainLayout = ({ category }) => {
 
   const [isCreateFolderModalOpen, setIsCreateFolderModalOpen] = useState(false);
-  const [isCreateFileModalOpen, setIsCreateFileModalOpen] = useState(false);
   const [isUploadFileModalOpen, setIsUploadFileModalOpen] = useState(false);
   const [isSubFolder, setIsSubfolder] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -54,7 +53,7 @@ const MainLayout = ({ category }) => {
   }, [userId, category, dispatch]);
 
   return (
-    <div className={` p-2  h-full overflow-y-scroll  ${isCreateFolderModalOpen || isCreateFileModalOpen || isUploadFileModalOpen ? 'bg-gray-500 bg-opacity-50' : ''}`}>
+    <div className={` p-2  h-full overflow-y-scroll  ${isCreateFolderModalOpen  || isUploadFileModalOpen ? 'bg-gray-500 bg-opacity-50' : ''}`}>
       <div className="flex flex-col md:flex-row justify-between items-center mb-4 p-2 border-b-1">
         <div className="text-sm mb-2 md:mb-0">
           <Breadcrumb isSubFolder={isSubFolder} setIsSubfolder={setIsSubfolder} category={category} />
@@ -95,17 +94,13 @@ const MainLayout = ({ category }) => {
       </div>
       <div className='p-2'>
         <div className="relative">
-          {(isCreateFolderModalOpen || isCreateFileModalOpen || isUploadFileModalOpen) && (
+          {(isCreateFolderModalOpen || isUploadFileModalOpen) && (
             <div className="inset-0 bg-black opacity-50 z-50" />
           )}
           {isCreateFolderModalOpen && (
             <div className="fixed top-0 left-0 h-screen w-screen flex items-center justify-center bg-black bg-opacity-75 z-50">
 
               <CreateFolderModal isCreateFolderModalOpen={isCreateFolderModalOpen} setIsCreateFolderModalOpen={setIsCreateFolderModalOpen} category={category}/>
-            </div>
-          )}
-          {isCreateFileModalOpen && (
-            <div className="fixed top-0 left-0 h-screen w-screen flex items-center justify-center bg-black bg-opacity-75 z-50">
             </div>
           )}
           {isUploadFileModalOpen && (

@@ -11,7 +11,8 @@ import {
   ExitScreen,
   ProfilePage,
   PatientViewScreen,
-  ChatbotScreen
+  ChatbotScreen,
+  InvitePatientScreen
 } from './Pages';
 
 import Navbar from './Components/Navbar';
@@ -38,6 +39,8 @@ function App() {
         
             <Route path='/Dashboard' element={<RequireAuth><DashboardScreen /></RequireAuth>} />
             <Route path='/Patients' element={<RequireAuth><PatientsScreen /></RequireAuth>} />
+            <Route path='/invite' element={<RequireAuth><InvitePatientScreen /></RequireAuth>} />
+
             <Route path='/Patients/:patientId' element={<RequireAuth><PatientViewScreen /></RequireAuth>} />
             <Route path='/Patients/:patientId/:category/:folderId' element={<RequireAuth><PatientViewScreen /></RequireAuth>} />
             <Route path='/file/:fileId' element={<RequireAuth><FileComponent /></RequireAuth>} />

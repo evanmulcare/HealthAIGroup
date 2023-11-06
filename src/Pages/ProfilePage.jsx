@@ -6,7 +6,6 @@ import { getAuth, updateEmail, updatePassword } from "firebase/auth";
 import { toast } from 'react-toastify';
 import { uploadBytesResumable, getDownloadURL, ref } from "firebase/storage";
 
-
 const ProfilePage = () => {
 
     const users = useSelector((state) => state.users.users);

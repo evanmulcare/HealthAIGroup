@@ -8,8 +8,27 @@ const LungCancerModal = ({ setShowLungCancerModal, showLungCancerModal }) => {
     const [predictionResult, setPredictionResult] = useState(null);
     const [state, setState] = useState('notSubmitted');
     const [formData, setFormData] = useState({
-       
-      });
+        /* 'GENDER', 'AGE', 'SMOKING', 'YELLOW_FINGERS', 'ANXIETY', 'PEER_PRESSURE',
+        'CHRONIC DISEASE', 'FATIGUE', 'ALLERGY', 'WHEEZING', 'ALCOHOL CONSUMING',
+        'COUGHING', 'SHORTNESS OF BREATH','SWALLOWING DIFFICULTY','CHEST PAIN' */
+        GENDER: 'M',
+        AGE: '1',
+        SMOKING: '1',
+        YELLOW_FINGERS: '1',
+        ANXIETY: '1',
+        PEER_PRESSURE: '1',
+        CHRONIC_DISEASE: '1',
+        FATIGUE: '1',
+        ALLERGY: '1',
+        WHEEZING: '1',
+        ALCOHOL_CONSUMING: '1',
+        COUGHING: '1',
+        SHORTNESS_OF_BREATH: '1',
+        SWALLOWING_DIFFICULTY: '1',
+        CHEST_PAIN: '1',
+
+    });
+
       
       const handleFieldChange = (event) => {
         const fieldName = event.target.name;
@@ -31,7 +50,7 @@ const LungCancerModal = ({ setShowLungCancerModal, showLungCancerModal }) => {
           };
 
         try {
-            const response = await fetch("http://127.0.0.1:5000/predict", {
+            const response = await fetch("http://127.0.0.1:5000/predict-lung-disease", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -79,7 +98,270 @@ const LungCancerModal = ({ setShowLungCancerModal, showLungCancerModal }) => {
 
                     <form onSubmit={sendReportRequest}>
                       
-                      <h1 className='font-semibold text-gray-800 text-2xl text-center'>Coming Soon!</h1>
+                      <div className="w-full  md:flex px-3 mb-6 md:mb-0 ">
+                            <div className="md:flex md:flex-wrap md:-mx-3 mb-6 md:mb-0">
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="GENDER" className="block text-sm font-medium text-gray-600">
+                                        Patient Gender <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="GENDER"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.GENDER}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                        <option value="M">Male</option>
+                                        <option value="F">Female</option>
+                                    </select>
+                                </div>
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="AGE" className="block text-sm font-medium text-gray-600">
+                                        Patient AGE <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="AGE"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.AGE}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                        <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="SMOKING" className="block text-sm font-medium text-gray-600">
+                                        Patient Smokes <span className="text-red-500">*</span>
+                                    </label>
+                                      <select
+                                        name="SMOKING"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.SMOKING}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                         <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="YELLOW_FINGERS" className="block text-sm font-medium text-gray-600">
+                                        Patient Yellow Fingers <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="YELLOW_FINGERS"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.YELLOW_FINGERS}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                         <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="ANXIETY" className="block text-sm font-medium text-gray-600">
+                                        Patient has ANXIETY <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="ANXIETY"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.ANXIETY}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                         <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="PEER_PRESSURE" className="block text-sm font-medium text-gray-600">
+                                        PEER_PRESSURE <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="PEER_PRESSURE"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.PEER_PRESSURE}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                        <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="CHRONIC_DISEASE" className="block text-sm font-medium text-gray-600">
+                                     CHRONIC_DISEASE <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="CHRONIC_DISEASE"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.CHRONIC_DISEASE}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                       <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="FATIGUE" className="block text-sm font-medium text-gray-600">
+                                    FATIGUE <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="FATIGUE"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.FATIGUE}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                       <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="ALLERGY" className="block text-sm font-medium text-gray-600">
+                                    ALLERGY <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="ALLERGY"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.ALLERGY}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                       <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="WHEEZING" className="block text-sm font-medium text-gray-600">
+                                    WHEEZING <span className="text-red-500">*</span>
+                                    </label>
+
+                                     <select
+                                        name="WHEEZING"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.WHEEZING}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                       <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="ALCOHOL_CONSUMING" className="block text-sm font-medium text-gray-600">
+                                      ALCOHOL_CONSUMING <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="ALCOHOL_CONSUMING"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.ALCOHOL_CONSUMING}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                       <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="COUGHING" className="block text-sm font-medium text-gray-600">
+                                    COUGHING <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="COUGHING"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.COUGHING}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+
+                                        <option value="1">No</option>
+                                        <option value="2">Yes</option>
+
+                                    </select>
+                                </div>
+
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="SHORTNESS_OF_BREATH" className="block text-sm font-medium text-gray-600">
+                                    SHORTNESS_OF_BREATH <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="SHORTNESS_OF_BREATH"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.SHORTNESS_OF_BREATH}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                         <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="SWALLOWING_DIFFICULTY" className="block text-sm font-medium text-gray-600">
+                                    SWALLOWING_DIFFICULTY <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="SWALLOWING_DIFFICULTY"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.SWALLOWING_DIFFICULTY}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                         <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+
+                                <div className="md:w-1/2 px-3 mb-4">
+                                    <label htmlFor="CHEST_PAIN" className="block text-sm font-medium text-gray-600">
+                                    CHEST_PAIN <span className="text-red-500">*</span>
+                                    </label>
+                                    <select
+                                        name="CHEST_PAIN"
+                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        value={formData.CHEST_PAIN}
+                                        onChange={handleFieldChange}
+                                        required
+                                    >
+                                         <option value="1">No</option>
+                                        <option value="2">Yes</option>
+                                    </select>
+                                </div>
+
+
+                                <div className="w-full flex items-center justify-between">
+                                    <button
+                                        type="submit"
+                                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                                    >
+                                        Run Report
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <p className="text-sm text-gray-600 mt-4">
+                            Required fields are marked with an asterisk (*)
+                        </p>
 
                     </form>
 
