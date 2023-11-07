@@ -77,8 +77,8 @@ export const signUpWithEmailAndPasswordAsync = (
   firstname,
   lastname,
   role,
-  profileimg,
-  doctor
+  profileimg/*,
+  doctor*/
 ) => async (dispatch) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -88,7 +88,7 @@ export const signUpWithEmailAndPasswordAsync = (
       const user = userCredential.user;
 
       const userDocRef = doc(db, 'users', user.uid);
-      if (role == 'patient') {
+      /*if (role == 'patient') {
         await setDoc(userDocRef, {
           // If the user's role is 'patient', add a doctor reference
           firstname: firstname,
@@ -98,17 +98,17 @@ export const signUpWithEmailAndPasswordAsync = (
           profileimg: profileimg,
           doctor: doctor,
         });
-      }
-      else {
+      }*/
+
+      //else {
         await setDoc(userDocRef, {
           firstname: firstname,
           lastname: lastname,
           email: email,
           role: role,
-          profileimg: profileimg,
-
+          profileimg: profileimg
         });
-      }
+      //}
 
       toast.success('Registration successful. You can now login through the login area (If you are A doctor)', {
         position: 'top-center',

@@ -74,10 +74,11 @@ const RegisterForm = () => {
   const [input, setInput] = useState({
     email: '',
     password: '',
+    confirmPassword: '',
     firstname: '',
     lastname: '',
-    permissions: '',
-    doctor:  '',
+    permissions: 'doctor'/*,
+    doctor:  '',*/
   });
 
   useEffect(() => {
@@ -123,10 +124,23 @@ const RegisterForm = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await dispatch(signUpWithEmailAndPasswordAsync(input.email, input.password, input.firstname, input.lastname, input.permissions, fileURL, input.doctor));
+      if (input.password === input.confirmPassword) dispatch(signUpWithEmailAndPasswordAsync(input.email, input.password, input.firstname, input.lastname, input.permissions, fileURL, input.doctor));
+
+      else {
+        // Error toast.
+			  toast.error('Confirmed password must match password.', {
+				  position: 'top-center',
+				  autoClose: 3000,
+			  });
+      }
      
     } catch (error) {
       console.error('Error registering and logging in:', error);
+
+      toast.error('Unexpected error registering and logging in.', {
+        position: 'top-center',
+        autoClose: 3000,
+      });
     }
   };
 
@@ -163,11 +177,22 @@ const RegisterForm = () => {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               Password
             </label>
-            <input onChange={handleChange} name="password" value={input.password} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="text" placeholder="strong password" required />
+            <input onChange={handleChange} name="password" value={input.password} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="strong password" required />
 
           </div>
         </div>
 
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="w-full px-3">
+            <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              Confirm Password
+            </label>
+            <input onChange={handleChange} name="confirmPassword" value={input.confirmPassword} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-password" type="password" placeholder="confirm password" required />
+
+          </div>
+        </div>
+        
+        {/*
         <div className='w-full'>
           <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>
             User Role
@@ -217,7 +242,7 @@ const RegisterForm = () => {
           />
         </div>
         )}
-
+        */}
 
         <div className="mt-5 flex items-center">
           <div className="relative rounded-full w-32 h-32 bg-gray-300 overflow-hidden">
@@ -246,7 +271,6 @@ const RegisterForm = () => {
               onChange={handleLogoFileChange}
               accept=".png, .jpg, .jpeg, .gif"
               className="form-input block tracking-wide text-gray-400 text-xs font-bold mb-2 mx-auto"
-              required
             />
           </div>
         </div>
