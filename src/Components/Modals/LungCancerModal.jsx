@@ -1,18 +1,24 @@
-import React, { useState, useContext } from 'react';
+import React, { useState,useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
-import Confetti from 'react-confetti'
-
-const LungCancerModal = ({ setShowLungCancerModal, showLungCancerModal }) => {
+import Confetti from 'react-confetti';
+import { createReportAsync } from '../../Contexts/actionCreators/ReportActionCreator';
+import { useDispatch } from 'react-redux';
+const LungCancerModal = ({ setShowLungCancerModal, showLungCancerModal, patientId }) => {
     const [predictionResult, setPredictionResult] = useState(null);
     const [state, setState] = useState('notSubmitted');
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (predictionResult !== null) {
+            handleCreateReport(); 
+        }
+    }, [predictionResult]);
+
     const [formData, setFormData] = useState({
-        /* 'GENDER', 'AGE', 'SMOKING', 'YELLOW_FINGERS', 'ANXIETY', 'PEER_PRESSURE',
-        'CHRONIC DISEASE', 'FATIGUE', 'ALLERGY', 'WHEEZING', 'ALCOHOL CONSUMING',
-        'COUGHING', 'SHORTNESS OF BREATH','SWALLOWING DIFFICULTY','CHEST PAIN' */
         GENDER: 'M',
-        AGE: '1',
+        AGE: '22',
         SMOKING: '1',
         YELLOW_FINGERS: '1',
         ANXIETY: '1',
@@ -29,7 +35,6 @@ const LungCancerModal = ({ setShowLungCancerModal, showLungCancerModal }) => {
 
     });
 
-      
       const handleFieldChange = (event) => {
         const fieldName = event.target.name;
         const fieldValue = event.target.value;
@@ -45,9 +50,24 @@ const LungCancerModal = ({ setShowLungCancerModal, showLungCancerModal }) => {
 
         setState('loading');
 
+
         const requestPayload = {
-            ...formData
-          };
+            GENDER: formData.GENDER,
+            AGE: parseInt(formData.AGE),
+            SMOKING: parseInt(formData.SMOKING),
+            YELLOW_FINGERS: parseInt(formData.YELLOW_FINGERS),
+            ANXIETY: parseInt(formData.ANXIETY),
+            PEER_PRESSURE: parseInt(formData.PEER_PRESSURE),
+            CHRONIC_DISEASE: parseInt(formData.CHRONIC_DISEASE),
+            FATIGUE: parseInt(formData.FATIGUE),
+            ALLERGY: parseInt(formData.ALLERGY),
+            WHEEZING: parseInt(formData.WHEEZING),
+            ALCOHOL_CONSUMING: parseInt(formData.ALCOHOL_CONSUMING),
+            COUGHING: parseInt(formData.COUGHING),
+            SHORTNESS_OF_BREATH: parseInt(formData.SHORTNESS_OF_BREATH),
+            SWALLOWING_DIFFICULTY: parseInt(formData.SWALLOWING_DIFFICULTY),
+            CHEST_PAIN: parseInt(formData.CHEST_PAIN),
+        };
 
         try {
             const response = await fetch("http://127.0.0.1:5000/predict-lung-disease", {
@@ -75,6 +95,18 @@ const LungCancerModal = ({ setShowLungCancerModal, showLungCancerModal }) => {
 
         }
     };
+
+      const handleCreateReport = async () => {
+        const newFormData = {
+            result: String(predictionResult),
+            type: "lung",
+            patient: String(patientId),
+            date: String(new Date().toDateString()),
+            ...formData,
+        };
+        dispatch(createReportAsync(newFormData));
+    };
+
 
 
     return ReactDOM.createPortal(
@@ -120,16 +152,14 @@ const LungCancerModal = ({ setShowLungCancerModal, showLungCancerModal }) => {
                                     <label htmlFor="AGE" className="block text-sm font-medium text-gray-600">
                                         Patient AGE <span className="text-red-500">*</span>
                                     </label>
-                                    <select
+                                    <input
+                                        type="text"
                                         name="AGE"
-                                        className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+                                        className="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                                         value={formData.AGE}
                                         onChange={handleFieldChange}
                                         required
-                                    >
-                                        <option value="1">No</option>
-                                        <option value="2">Yes</option>
-                                    </select>
+                                    />
                                 </div>
 
 
@@ -251,7 +281,6 @@ const LungCancerModal = ({ setShowLungCancerModal, showLungCancerModal }) => {
                                     <label htmlFor="WHEEZING" className="block text-sm font-medium text-gray-600">
                                     WHEEZING <span className="text-red-500">*</span>
                                     </label>
-
                                      <select
                                         name="WHEEZING"
                                         className="form-select mt-1 block w-full rounded-md border-gray-300 shadow-sm"
@@ -380,14 +409,14 @@ const LungCancerModal = ({ setShowLungCancerModal, showLungCancerModal }) => {
                             <div>
                                 {predictionResult ? (
                                     <>  
-                                    <Confetti />
-                                        <h1 className='font-semibold text-gray-800 text-2xl text-center'>Bad News, Colon Cancer Likely</h1>
-                                        <p className='font-semibold text-gray-600 text-xl text-center'>Based on the available datasets it is likely that this patient has colon cancer.</p>
+                                        <h1 className='font-semibold text-gray-800 text-2xl text-center'>Bad News, Lung Cancer Likely</h1>
+                                        <p className='font-semibold text-gray-600 text-xl text-center'>Based on the available datasets it is likely that this patient has Lung cancer.</p>
                                     </>
                                 ) : (
                                     <>
-                                        <h1 className='font-semibold text-gray-800 text-2xl text-center'>Good News, Colon Cancer Unlikely</h1>
-                                        <p className='font-semibold text-gray-600 text-xl text-center'>Based on the available datasets it is likely that this patient does not have colon cancer.</p>
+                                        <Confetti />
+                                        <h1 className='font-semibold text-gray-800 text-2xl text-center'>Good News, Lung Cancer Unlikely</h1>
+                                        <p className='font-semibold text-gray-600 text-xl text-center'>Based on the available datasets it is likely that this patient does not have Lung cancer.</p>
                                     </>
                                 )}
                             </div>

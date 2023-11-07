@@ -1,0 +1,3 @@
+export const FETCH_REPORTS = "FETCH_REPORTS";
+export const ADD_REPORTS = "ADD_REPORTS";
+export const CREATE_REPORT = "CREATE_REPORT";

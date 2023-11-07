@@ -13,7 +13,7 @@ import Robot from '../Assets/roboto.jpeg';
 import { useSelector } from 'react-redux';
 
 const Chatbot = () => {
-    const API_KEY = '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'; //CHATGPT API KEY
+    const API_KEY = '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'; //CHATGPT API KEY
     
     const users = useSelector((state) => state.users.users);
     const currentUser = useSelector((state) => state.auth.currentUser);

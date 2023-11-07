@@ -1,12 +1,21 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import Confetti from 'react-confetti'
+import { useDispatch } from 'react-redux';
+import { createReportAsync } from '../../Contexts/actionCreators/ReportActionCreator';
 
-const HeartDiseaseModal = ({ setShowHeartDiseaseModal, showHeartDiseaseModal }) => {
+const HeartDiseaseModal = ({ setShowHeartDiseaseModal, showHeartDiseaseModal, patientId }) => {
     const [predictionResult, setPredictionResult] = useState(null);
     const [state, setState] = useState('notSubmitted');
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (predictionResult !== null) {
+            handleCreateReport(); 
+        }
+    }, [predictionResult]);
+
 
     const [formData, setFormData] = useState({
         age: '',
@@ -69,6 +78,18 @@ const HeartDiseaseModal = ({ setShowHeartDiseaseModal, showHeartDiseaseModal }) 
 
         }
     };
+
+    const handleCreateReport = async () => {
+        const newFormData = {
+            result: String(predictionResult),
+            type: "heart",
+            patient: String(patientId),
+            date: String(new Date().toDateString()),
+            ...formData,
+        };
+        dispatch(createReportAsync(newFormData));
+    };
+
 
 
     return ReactDOM.createPortal(

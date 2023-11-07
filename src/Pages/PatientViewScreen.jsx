@@ -88,7 +88,7 @@ const PatientViewScreen = () => {
                 }
                 {
                     activeTab === 'risk' && (
-                        <PatientRiskPage />
+                        <PatientRiskPage patient={patient}/>
                     )
                 }
             </div>
