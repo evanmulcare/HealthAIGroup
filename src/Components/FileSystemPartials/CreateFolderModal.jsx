@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { createFolderFunction } from '../Contexts/actionCreators/FileSystemActionCreator';
+import { createFolderFunction } from '../../Contexts/actionCreators/FileSystemActionCreator';
 import { toast } from 'react-toastify';
 import { FaFolderPlus } from 'react-icons/fa'
 

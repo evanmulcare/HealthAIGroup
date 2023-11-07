@@ -2,7 +2,7 @@ import React from 'react';
 import { FaAngleRight, FaHome } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { changeFolder } from '../Contexts/actionCreators/FileSystemActionCreator';
+import { changeFolder } from '../../Contexts/actionCreators/FileSystemActionCreator';
 
 //Shows breadcrumb for current directory. used in main layout
 const Breadcrumb = ({ setIsSubfolder, category }) => {

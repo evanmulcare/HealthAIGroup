@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import FileTile from './FileTile';
 import { useDispatch } from 'react-redux';
-import { changeFolder } from '../Contexts/actionCreators/FileSystemActionCreator';
+import { changeFolder } from '../../Contexts/actionCreators/FileSystemActionCreator';
 import { useNavigate } from 'react-router-dom';
 
 const ShowItems = ({ title, items, type, setIsSubfolder, category }) => {

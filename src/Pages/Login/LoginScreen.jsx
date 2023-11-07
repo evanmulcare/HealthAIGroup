@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import RegisterForm from '../Components/FormPartials/RegisterForm';
-import SignInForm from '../Components/FormPartials/SignInForm';
+import RegisterForm from '../../Components/FormPartials/RegisterForm';
+import SignInForm from '../../Components/FormPartials/SignInForm';
 
 const LoginScreen = () => {
   const [activeTab, setActiveTab] = useState('login');

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FaFolder, FaFile, FaCircle, FaFilePdf, FaFileWord, FaFileExcel, FaFileImage, FaFilePowerpoint, FaDownload } from 'react-icons/fa';
 import { format } from 'date-fns';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsers } from '../Contexts/actionCreators/ userActionCreator';
+import { getUsers } from '../../Contexts/actionCreators/ userActionCreator';
 
 //displays each file in its individual tile, changes depending on type 'file' or 'folder' and styles it based of file properties i.e file extension
 const FileTile = ({ name, type, onDoubleClick, UserId, updatedAt, url }) => {

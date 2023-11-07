@@ -1,11 +1,12 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { FaUpload, FaFolderPlus, FaAngleDown, FaPlus,FaFileAlt } from 'react-icons/fa';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import { getFoldersFunction, getFilesFunction } from '../Contexts/actionCreators/FileSystemActionCreator';
+import { getFoldersFunction, getFilesFunction } from '../../Contexts/actionCreators/FileSystemActionCreator';
 import CreateFolderModal from './CreateFolderModal';
 import UploadFileModal from './UploadFileModal';
 import Content from './Content';
 import Breadcrumb from './Breadcrumb';
+
 const MainLayout = ({ category }) => {
 
   const [isCreateFolderModalOpen, setIsCreateFolderModalOpen] = useState(false);

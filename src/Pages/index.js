@@ -1,10 +1,9 @@
 //export all the pages in pages directory for easy access
-export { default as DashboardScreen } from './DashboardScreen';
-export { default as PatientsScreen } from './PatientsScreen';
-export { default as InvitePatientScreen } from './InvitePatientScreen';
-
-export { default as LoginScreen } from './LoginScreen';
-export { default as ExitScreen } from './ExitScreen';
-export { default as ChatbotScreen } from './ChatbotScreen';
-export { default as ProfilePage } from './ProfilePage';
-export { default as PatientViewScreen } from './PatientViewScreen';
+export { default as DashboardScreen } from './Dashboard/DashboardScreen';
+export { default as AllPatientsScreen } from './AllPatients/AllPatientsScreen';
+export { default as InvitePatientScreen } from './Invites/InvitePatientScreen';
+export { default as LoginScreen } from './Login/LoginScreen';
+export { default as ExitScreen } from './Exit/ExitScreen';
+export { default as ChatbotScreen } from './Chatbot/ChatbotScreen';
+export { default as ProfilePage } from './Profile/ProfilePage';
+export { default as IndividualPatientScreen } from './IndividualPatient/IndividualPatientScreen';
