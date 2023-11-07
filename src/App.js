@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import {  useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { I18nextProvider } from 'react-i18next';
+import i18n from './Translations/i18n';
 
 import {
   DashboardScreen,
@@ -28,6 +30,7 @@ function App() {
 
   return (
     <div>
+         <I18nextProvider i18n={i18n}>
       <BrowserRouter>
         <ToastContainer />
         <Navbar />
@@ -52,6 +55,7 @@ function App() {
           </Routes>
         </div>
       </BrowserRouter>
+      </I18nextProvider>
     </div>
   );
 }

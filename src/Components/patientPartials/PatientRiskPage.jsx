@@ -9,8 +9,10 @@ import LungImage from '../../Assets/LungImage.png'
 import ColonImage from '../../Assets/ColonImage.png'
 import { getReports } from '../../Contexts/actionCreators/ReportActionCreator';
 import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const PatientRiskPage = ({ patient }) => {
+    const { t } = useTranslation();
 
     const [showHeartDiseaseModal, setShowHeartDiseaseModal] = useState(false);
     const [showColonCancerModal, setShowColonCancerModal] = useState(false);
@@ -54,7 +56,7 @@ const PatientRiskPage = ({ patient }) => {
             )}
 
 
-            <h1 className="text-2xl font-semibold text-gray-800 pl-10 mt-4">Run AI generated Risk Assesments</h1>
+            <h1 className="text-2xl font-semibold text-gray-800 pl-10 mt-4">{t('riskPage.title')}</h1>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-5 md:m-5">
                 <div
@@ -73,13 +75,13 @@ const PatientRiskPage = ({ patient }) => {
                     <div className="absolute left-0 top-0 right-0 bottom-0 bg-gradient-to-r from-blue-500 to-blue-700 opacity-70 rounded-2xl"></div>
                     <div className="relative z-10">
                         <div className="flex justify-between items-center mb-4">
-                            <div className="text-3xl font-semibold text-white">Heart Disease</div>
+                            <div className="text-3xl font-semibold text-white">{t('riskPage.heartDiseaseTitle')}</div>
                         </div>
                         <p className="text-md text-gray-100 mb-6">
-                            Run AI generated test to predict the likelihood of a patient's chance of heart disease.
+                        {t('riskPage.heartDiseaseText')}
                         </p>
                         <button className="flex items-center text-white hover:text-gray-200 transition duration-300">
-                            <span>Run Report</span>
+                            <span> {t('riskPage.heartDiseaseRun')}</span>
                             <RiArrowRightSLine size={20} className="ml-2" />
                         </button>
                     </div>
@@ -102,13 +104,13 @@ const PatientRiskPage = ({ patient }) => {
                     <div className="absolute left-0 top-0 right-0 bottom-0 bg-gradient-to-r from-red-500 to-red-700 opacity-70 rounded-2xl"></div>
                     <div className="relative z-10">
                         <div className="flex justify-between items-center mb-4">
-                            <div className="text-3xl font-semibold text-white ">Lung Cancer</div>
+                            <div className="text-3xl font-semibold text-white ">{t('riskPage.lungCancerTitle')}</div>
                         </div>
                         <p className="text-md text-gray-100 mb-6">
-                            Run AI generated test to predict likelyhood of patients chance of lung cancer
+                        {t('riskPage.lungCancerText')} 
                         </p>
                         <button className="flex items-center text-white hover:text-gray-200 transition duration-300">
-                            <span>Run Report</span>
+                            <span>{t('riskPage.lungCancerRun')}</span>
                             <RiArrowRightSLine size={20} className="ml-2" />
                         </button>
                     </div>
@@ -132,20 +134,20 @@ const PatientRiskPage = ({ patient }) => {
                     <div className="absolute left-0 top-0 right-0 bottom-0 bg-gradient-to-r from-green-500 to-green-700 opacity-70 rounded-2xl"></div>
                     <div className="relative z-10">
                         <div className="flex justify-between items-center mb-4">
-                            <div className="text-3xl font-semibold text-white ">Colon Cancer</div>
+                            <div className="text-3xl font-semibold text-white ">{t('riskPage.colonCancerTitle')}</div>
                         </div>
                         <p className="text-md text-gray-100 mb-6">
-                            Run AI generated test to predict likelyhood of patients chance of colon cancer
+                        {t('riskPage.colonCancerText')} 
                         </p>
                         <button className="flex items-center text-white hover:text-gray-200 transition duration-300">
-                            <span>Run Report</span>
+                            <span>{t('riskPage.colonCancerRun')}</span>
                             <RiArrowRightSLine size={20} className="ml-2" />
                         </button>
                     </div>
                 </div>
             </div>
             <div >
-                <h1 className="text-xl font-semibold text-gray-600 pl-10 mt-4">Past Medical Reports for {patient?.firstname}</h1>
+                <h1 className="text-xl font-semibold text-gray-600 pl-10 mt-4">{t('riskPage.pastReports')} {patient?.firstname}</h1>
                 <hr className='mx-5 border' />
                 <div className='grid grid-cols-1  gap-4'>
                     {reports.map((report) => (

@@ -10,11 +10,13 @@ import {
     Avatar
 } from '@chatscope/chat-ui-kit-react';
 import Robot from '../../Assets/roboto.jpeg';
+import { useTranslation } from 'react-i18next';
 
 const ChatbotView = ({ messages, thinking, handleSend, currentUserData }) => {
+    const { t } = useTranslation();
 
     return (
-        <div data-testid="chatbot-1" className="w-full h-[600px]">
+        <div  className="w-full h-[600px]">
             <MainContainer>
                 <ChatContainer>
                     <MessageList>
@@ -23,9 +25,9 @@ const ChatbotView = ({ messages, thinking, handleSend, currentUserData }) => {
                                 <Avatar src={message.sender === 'ChatGPT' ? Robot : currentUserData?.profileimg} />
                             </Message>
                         ))}
-                        {thinking && <TypingIndicator content="RoboDoc is Thinking" />}
+                        {thinking && <TypingIndicator content={t('chatbot.thinking')} />}
                     </MessageList>
-                    <MessageInput placeholder="Ask your medical-related question!" onSend={handleSend} attachButton={false} />
+                    <MessageInput placeholder={t('chatbot.placeholder')} onSend={handleSend} attachButton={false} />
                 </ChatContainer>
             </MainContainer>
         </div>

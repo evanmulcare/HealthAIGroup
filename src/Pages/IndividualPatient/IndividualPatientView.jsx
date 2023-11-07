@@ -4,8 +4,11 @@ import MainLayout from '../../Components/FileSystemPartials/MainLayout';
 import PatientRiskPage from '../../Components/patientPartials/PatientRiskPage';
 import PatientChat from '../../Components/patientPartials/PatientChat';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { useTranslation } from 'react-i18next';
 
 const IndividualPatientView = ({ activeTab, setActiveTab, patient, params, navigate }) => {
+    const { t } = useTranslation();
+
     return (
         <div className="w-full h-full mx-auto text-gray-700 pt-2">
             <div className='relative'>
@@ -15,7 +18,7 @@ const IndividualPatientView = ({ activeTab, setActiveTab, patient, params, navig
                         className="flex items-center bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring rounded-lg px-3 py-2 transition duration-300"
                     >
                         <AiOutlineArrowLeft className="mr-2" size={20} />
-                        <span className="text-sm">Back</span>
+                        <span className="text-sm">{t('individualPatientScreen.back')}</span>
                     </button>
 
                     <div className='flex'>
@@ -43,20 +46,20 @@ const IndividualPatientView = ({ activeTab, setActiveTab, patient, params, navig
                         className={`flex-1 py-2 ${activeTab === 'risk' ? 'border-b-2 border-blue-500' : 'text-gray-500'}`}
                         onClick={() => setActiveTab('risk')}
                     >
-                        Risk Report
+                        {t('individualPatientScreen.riskReport')}
                     </button>
                     <button
                         className={`flex-1 py-2 ${activeTab === 'chat' ? 'border-b-2 border-blue-500' : 'text-gray-500'}`}
                         onClick={() => setActiveTab('chat')}
                     >
-                        Chat
+                        {t('individualPatientScreen.chat')}
                     </button>
 
                     <button
                         className={`flex-1 py-2 ${activeTab === 'files' ? 'border-b-2 border-blue-500' : 'text-gray-500'}`}
                         onClick={() => setActiveTab('files')}
                     >
-                        Patient Files
+                        {t('individualPatientScreen.files')}
                     </button>
                 </div>
                 {activeTab === 'chat' && (

@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import DashboardView from './DashboardView';
+import i18n from '../../Translations/i18n';
+import { changeTranslation } from '../../Contexts/actionCreators/TranslationActionCreator';
 
-import { downloadHeartDiseaseAccuracy, downloadLungCancerAccuracy, downloadHeartDiseaseReport, downloadLungCancerReport} from '../../Hooks/usePredictionDataReport'
+import { downloadHeartDiseaseAccuracy, downloadLungCancerAccuracy, downloadHeartDiseaseReport, downloadLungCancerReport } from '../../Hooks/usePredictionDataReport'
 const DashboardScreen = () => {
   const users = useSelector((state) => state.users.users);
   const currentUser = useSelector((state) => state.auth.currentUser);
   const currentUserData = users.find((user) => user.docId === currentUser?.uid);
-
-  const [selectedLanguage, setSelectedLanguage] = useState('english');
+  const selectedLanguage = useSelector((state) => state.language.selectedLanguage);
+  const dispatch = useDispatch();
 
   const handleLanguageChange = (language) => {
-    setSelectedLanguage(language);
+    dispatch(changeTranslation(language));
+    i18n.changeLanguage(language);
+
   };
 
   return (

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ProfilePageView = ({
   fileURL,
@@ -13,6 +14,9 @@ const ProfilePageView = ({
   setEditedPassword,
   users
 }) => {
+
+  const { t } = useTranslation();
+
   return (
     <div>
       <div>
@@ -47,14 +51,14 @@ const ProfilePageView = ({
           <div className="flex flex-col justify-between mt-4 md:mt-0 md:ml-4">
             <div className="space-y-2">
               <h3 className="font-medium text-gray-500 text-lg">
-                {currentUserData?.firstname}'s Information
+                {t('profileScreen.accountInformation')}
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 <label
                   className="text-gray-600 font-medium text-sm uppercase"
                   htmlFor="email"
                 >
-                  Account email:
+                  {t('profileScreen.accountEmail')}
                 </label>
 
                 <input
@@ -71,7 +75,7 @@ const ProfilePageView = ({
                   className="text-gray-600 font-medium text-sm uppercase"
                   htmlFor="password"
                 >
-                  Account password:
+                  {t('profileScreen.accountPassword')}
                 </label>
 
                 <input
@@ -80,7 +84,7 @@ const ProfilePageView = ({
                   className="border rounded-md px-2 py-1 text-gray-800 col-span-2"
                   value={editedPassword}
                   disabled={!editMode}
-                  placeholder="********"
+                  placeholder={t('profileScreen.editModePlaceholder')}
                   onChange={(e) => setEditedPassword(e.target.value)}
                 />
               </div>
@@ -92,7 +96,7 @@ const ProfilePageView = ({
                   className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
                   onClick={handleEditSave}
                 >
-                  Save Changes
+                  {t('profileScreen.editSaveButtonLabel')}
                 </button>
                 <button
                   className="px-4 py-2 bg-gray-400 text-white rounded-md"
@@ -101,7 +105,7 @@ const ProfilePageView = ({
                     setEditedEmail(users.email);
                   }}
                 >
-                  Cancel
+                  {t('profileScreen.editCancelButtonLabel')}
                 </button>
               </div>
             ) : (
@@ -109,7 +113,7 @@ const ProfilePageView = ({
                 className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md"
                 onClick={() => setEditMode(true)}
               >
-                Edit
+                {t('profileScreen.editModeButtonLabel')}
               </button>
             )}
           </div>

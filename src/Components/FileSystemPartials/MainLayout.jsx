@@ -6,8 +6,10 @@ import CreateFolderModal from './CreateFolderModal';
 import UploadFileModal from './UploadFileModal';
 import Content from './Content';
 import Breadcrumb from './Breadcrumb';
+import { useTranslation  } from 'react-i18next';
 
 const MainLayout = ({ category }) => {
+  const { t } = useTranslation(); 
 
   const [isCreateFolderModalOpen, setIsCreateFolderModalOpen] = useState(false);
   const [isUploadFileModalOpen, setIsUploadFileModalOpen] = useState(false);
@@ -65,7 +67,7 @@ const MainLayout = ({ category }) => {
             onClick={() => setIsUploadFileModalOpen(true)}
           >
             <FaUpload className="md:mr-2" />
-            <span className="hidden md:inline">Upload File</span>
+            <span className="hidden md:inline">{t('mainLayout.uploadFile')}</span>
           </button>
          
           <div className="relative" ref={dropdownRef}>
@@ -74,7 +76,7 @@ const MainLayout = ({ category }) => {
               onClick={toggleDropdown}
             >
               <FaPlus className="md:mr-2" />
-              <span className="hidden md:inline">New</span>
+              <span className="hidden md:inline">{t('mainLayout.new')}</span>
               <FaAngleDown className="ml-2" />
             </button>
             {dropdownOpen && (
@@ -82,7 +84,7 @@ const MainLayout = ({ category }) => {
               <ul>
                 <li className="px-4 w-full py-2 cursor-pointer hover:bg-gray-100 inline-flex" onClick={() => setIsCreateFolderModalOpen(true)}>
                   <FaFolderPlus className="text-md mr-2 " />
-                  <span className="inline text-sm mb-2">New Folder</span>
+                  <span className="inline text-sm mb-2">{t('mainLayout.newFolder')}</span>
                 </li>
               </ul>
             </div>

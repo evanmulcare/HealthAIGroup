@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import ChatbotView from './ChatbotView';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const Chatbot = () => {
+  const { t } = useTranslation();
+
   const API_KEY = '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'; // CHATGPT API KEY
 
   const users = useSelector((state) => state.users.users);
@@ -15,7 +18,7 @@ const Chatbot = () => {
   // Message array, an initial message from the chat assistant to ask a question
   const [messages, setMessages] = useState([
     {
-      message: "Hey there, I am a medical assistant powered by ChatGPT. Ask me some questions!",
+      message: t('chatbot.opener'),
       sender: 'ChatGPT',
     },
   ]);

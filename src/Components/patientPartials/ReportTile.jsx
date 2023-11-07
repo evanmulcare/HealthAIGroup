@@ -1,15 +1,18 @@
-import React from 'react'
+import React from 'react';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai'
 import HeartImage from '../../Assets/HeartImage.webp'
 import LungImage from '../../Assets/LungImage.png'
 import ColonImage from '../../Assets/ColonImage.png'
+import { useTranslation } from 'react-i18next';
 
 const ReportTile = ({ report }) => {
+    const { t } = useTranslation();
+
     function renderField(label, value) {
         return (
             <div className="md:w-1/2 px-3 mb-4">
                 <label htmlFor={label} className="block text-sm font-medium text-gray-600">
-                    {label}
+                    {t(label)}
                 </label>
                 <span className='text-gray-600 text-md'>{value}</span>
             </div>
@@ -20,27 +23,25 @@ const ReportTile = ({ report }) => {
         <div className='border bg-white shadow-md  m-10 rounded-md'>
             <div className="mt-2 flex  justify-center  md:justify-between ">
                 <h1 className="text-2xl font-semibold text-gray-800 ml-4">
-                    {report?.type === "heart" ? "Heart Disease Prediction Report" :
-                        report?.type === "lung" ? "Lung Cancer Disease Prediction Report" :
-                            report?.type === "colon" ? "Colon Cancer Prediction Report" :
+                    {report?.type === "heart" ? t("reportTile.heartDiseasePredictionReport") :
+                        report?.type === "lung" ? t("reportTile.lungCancerPredictionReport") :
+                            report?.type === "colon" ? t("reportTile.colonCancerPredictionReport") :
                                 ""}
                 </h1>
 
-
                 <div className='text-center mb-2 mr-4'>
                     <h1 className="text-xs font-semibold text-gray-600 mr-2">
-                        Issue date
+                        {t("reportTile.issueDate")}
                     </h1>
                     <h1 className="text-sm font-semibold text-gray-800 mr-2">
                         {report?.date}
                     </h1>
                 </div>
-
             </div>
             <hr className='mx-2' />
             <div className='grid sm:grid-cols-1 md:grid-cols-4'>
                 <div className='col-span-1 md:border grid place-items-center'>
-                    <h2 className='text-lg font-semibold text-gray-600 text-center mt-2'>Result</h2>
+                    <h2 className='text-lg font-semibold text-gray-600 text-center mt-2'>{t("reportTile.result")}</h2>
                     <>
                         <div className='flex space-x-2'>
                             {report?.result === "0" ? (
@@ -54,84 +55,81 @@ const ReportTile = ({ report }) => {
                         </div>
                         <h2 className='text-2xl font-semibold text-gray-800 text-center'>
                             {report?.type === "heart" ?
-                                (report?.result === "1" ? "Heart Disease Likely." : "Heart Disease Unlikely.")
+                                (report?.result === "1" ? t("reportTile.heartDiseaseLikely") : t("reportTile.heartDiseaseUnlikely"))
                                 : report?.type === "lung" ?
-                                    (report?.result === "1" ? "Lung Cancer Likely." : "Lung Cancer Unlikely.")
+                                    (report?.result === "1" ? t("reportTile.lungCancerLikely") : t("reportTile.lungCancerUnlikely"))
                                     : report?.type === "colon" ?
-                                        (report?.result === "1" ? "Colon Cancer Likely." : "Colon Cancer Unlikely.")
+                                        (report?.result === "1" ? t("reportTile.colonCancerLikely") : t("reportTile.colonCancerUnlikely"))
                                         : ""}
                         </h2>
 
                         {report?.result === "0" ? (
                             <p className='text-sm font-normal text-gray-600 text-center'>
                                 {report?.type === "heart"
-                                    ? "This patient is safe from Heart Disease, for now."
+                                    ? t("reportTile.heartDiseaseSafe")
                                     : report?.type === "lung"
-                                        ? "This patient is safe from Lung Cancer, for now."
+                                        ? t("reportTile.lungCancerSafe")
                                         : report?.type === "colon"
-                                            ? "This patient is safe from Colon Cancer, for now."
-                                            : "This patient is safe, for now."}
+                                            ? t("reportTile.colonCancerSafe")
+                                            : t("reportTile.patientSafe")}
                             </p>
                         ) : (
                             <p className='text-sm font-normal text-gray-600 text-center'>
                                 {report?.type === "heart"
-                                    ? "This patient is at risk of Heart Disease."
+                                    ? t("reportTile.heartDiseaseAtRisk")
                                     : report?.type === "lung"
-                                        ? "This patient is at risk of Lung Cancer."
+                                        ? t("reportTile.lungCancerAtRisk")
                                         : report?.type === "colon"
-                                            ? "This patient is at risk of Colon Cancer."
-                                            : "This patient is at risk."}
+                                            ? t("reportTile.colonCancerAtRisk")
+                                            : t("reportTile.patientAtRisk")}
                             </p>
                         )}
                     </>
 
                 </div>
 
-
                 <div className='col-span-3 border p-4'>
                     {report?.type === "heart" ?
                         <div className="md:flex flex-wrap">
-                            {renderField("Patient Age", report?.age)}
-                            {renderField("Patient Sex", report?.sex)}
-                            {renderField("Blood Pressure", report?.BP)}
-                            {renderField("Chest Pain Type Level", report?.ChestPainType)}
-                            {renderField("Cholesterol Level", report?.Cholesterol)}
-                            {renderField("Fasting Blood Sugar over 120", report?.FBSOver120)}
-                            {renderField("EKG Results", report?.EKGResults)}
-                            {renderField("Max Heart Rate", report?.MaxHR)}
-                            {renderField("Exercise-Induced Angina", report?.ExerciseAngina)}
-                            {renderField("ST Depression", report?.STdepression)}
-                            {renderField("Slope of the Peak Exercise ST Segment", report?.SlopeOfST)}
-                            {renderField("Number of Major Vessels Colored by Flourosopy", report?.NumberOfVesselsFluro)}
-                            {renderField("Thallium Stress Test Result", report?.Thallium)}
+                            {renderField(t("reportTile.patientAge"), report?.age)}
+                            {renderField(t("reportTile.patientSex"), report?.sex)}
+                            {renderField(t("reportTile.bloodPressure"), report?.BP)}
+                            {renderField(t("reportTile.chestPainTypeLevel"), report?.ChestPainType)}
+                            {renderField(t("reportTile.cholesterolLevel"), report?.Cholesterol)}
+                            {renderField(t("reportTile.fastingBloodSugarOver120"), report?.FBSOver120)}
+                            {renderField(t("reportTile.ekgResults"), report?.EKGResults)}
+                            {renderField(t("reportTile.maxHeartRate"), report?.MaxHR)}
+                            {renderField(t("reportTile.exerciseInducedAngina"), report?.ExerciseAngina)}
+                            {renderField(t("reportTile.stDepression"), report?.STdepression)}
+                            {renderField(t("reportTile.slopeOfPeakExerciseSTSegment"), report?.SlopeOfST)}
+                            {renderField(t("reportTile.numberOfMajorVesselsColoredByFlourosopy"), report?.NumberOfVesselsFluro)}
+                            {renderField(t("reportTile.thalliumStressTestResult"), report?.Thallium)}
+
                         </div>
                         :
                         report?.type === "lung" ?
 
                             <div className="md:flex flex-wrap">
+                                {renderField(t("reportTile.patientGender"), report?.GENDER)}
+                                {renderField(t("reportTile.patientAge"), report?.AGE)}
+                                {renderField(t("reportTile.patientSmokes"), report?.SMOKING)}
+                                {renderField(t("reportTile.patientYellowFingers"), report?.YELLOW_FINGERS)}
+                                {renderField(t("reportTile.patientHasAnxiety"), report?.ANXIETY)}
+                                {renderField(t("reportTile.peerPressure"), report?.PEER_PRESSURE)}
+                                {renderField(t("reportTile.chronicDisease"), report?.CHRONIC_DISEASE)}
+                                {renderField(t("reportTile.fatigue"), report?.FATIGUE)}
+                                {renderField(t("reportTile.allergy"), report?.ALLERGY)}
+                                {renderField(t("reportTile.wheezing"), report?.WHEEZING)}
+                                {renderField(t("reportTile.alcoholConsuming"), report?.ALCOHOL_CONSUMING)}
+                                {renderField(t("reportTile.coughing"), report?.COUGHING)}
+                                {renderField(t("reportTile.shortnessOfBreath"), report?.SHORTNESS_OF_BREATH)}
+                                {renderField(t("reportTile.swallowingDifficulty"), report?.SWALLOWING_DIFFICULTY)}
+                                {renderField(t("reportTile.chestPain"), report?.CHEST_PAIN)}
 
-                                {renderField("Patient Gender", report?.GENDER)}
-                                {renderField("Patient Age", report?.AGE)}
-                                {renderField("Patient Smokes", report?.SMOKING)}
-                                {renderField("Patient Yellow Fingers", report?.YELLOW_FINGERS)}
-                                {renderField("Patient has ANXIETY", report?.ANXIETY)}
-                                {renderField("PEER_PRESSURE", report?.PEER_PRESSURE)}
-                                {renderField("CHRONIC_DISEASE", report?.CHRONIC_DISEASE)}
-                                {renderField("FATIGUE", report?.FATIGUE)}
-                                {renderField("ALLERGY", report?.ALLERGY)}
-                                {renderField("WHEEZING", report?.WHEEZING)}
-                                {renderField("ALCOHOL_CONSUMING", report?.ALCOHOL_CONSUMING)}
-                                {renderField("COUGHING", report?.COUGHING)}
-                                {renderField("SHORTNESS_OF_BREATH", report?.SHORTNESS_OF_BREATH)}
-                                {renderField("SWALLOWING_DIFFICULTY", report?.SWALLOWING_DIFFICULTY)}
-                                {renderField("CHEST_PAIN", report?.CHEST_PAIN)}
                             </div>
-                            : report?.type === "colon" ? "Colon Cancer Prediction Report" :
-                                ""}
+                            : report?.type === "colon" ? t("reportTile.colonCancerPredictionReport") : ""}
                 </div>
-
             </div>
-
         </div >
     )
 }

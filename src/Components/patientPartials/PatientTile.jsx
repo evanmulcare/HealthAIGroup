@@ -4,8 +4,12 @@ import { BsThreeDotsVertical } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
 import DefaultProfile from '../../Assets/DefaultProfile.png';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
 const PatientTile = ({ patient }) => {
+  const { t } = useTranslation();
+
+
   const selectReportsByPatientId = (state, recieverId) => {
     return state.reports.reports.filter(report => report.patient === recieverId);
   };
@@ -50,7 +54,7 @@ const PatientTile = ({ patient }) => {
             className="px-5 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white transition duration-300"
             onClick={() => navigate(`/Patients/${patient?.docId}`)}
           >
-            <h3 className="text-sm">View</h3>
+            <h3 className="text-sm">{t('patientTile.view')}</h3>
           </button>
           <button
             className="px-1 py-2 rounded-md inline-flex hover:bg-gray-100 transition duration-300"
@@ -64,7 +68,7 @@ const PatientTile = ({ patient }) => {
                 <ul>
                   <li className="px-4 w-full py-2 cursor-pointer hover:bg-gray-100 inline-flex">
                     <FaTimesCircle className="text-md mr-2 text-red-500" />
-                    <span className="inline text-xs mb-2">Delete Patient</span>
+                    <span className="inline text-xs mb-2">{t('patientTile.delete')}</span>
                   </li>
                 </ul>
               </div>
@@ -82,7 +86,7 @@ const PatientTile = ({ patient }) => {
             />
           </div>
         </div>
-        <h2 className="mt-10 text-center text-lg font-semibold text-gray-600">{reports.length} Reports Available</h2>
+        <h2 className="mt-10 text-center text-lg font-semibold text-gray-600">{reports.length}{t('patientTile.reports')}</h2>
       </div>
 
     </div>

@@ -5,8 +5,11 @@ import { getComments } from '../../Contexts/actionCreators/commentActionCreator'
 import { createCommentAsync } from '../../Contexts/actionCreators/commentActionCreator';
 import { getUsers } from '../../Contexts/actionCreators/ userActionCreator';
 import renderComment from './renderComment';
+import { useTranslation } from 'react-i18next';
 
 const PatientChat = ({ reciever }) => {
+    const { t } = useTranslation();
+
     const currentUser = useSelector((state) => state.auth.currentUser);
     const [newComment, setNewComment] = useState('');
     const dispatch = useDispatch();
@@ -64,7 +67,7 @@ const PatientChat = ({ reciever }) => {
 
                     <input
                         type="text"
-                        placeholder="Add a comment..."
+                        placeholder={t('patientChat.placeholder')}
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
                         className="h-10 ml-2 px-4 py-2 w-full border rounded-md focus:outline-none focus:border-blue-500"
@@ -74,7 +77,7 @@ const PatientChat = ({ reciever }) => {
                 <button
                     className="text-blue-500 hover:text-blue-700 m-3 md:m-5" onClick={() => handleCreateComment()}
                 >
-                    Post
+                    {t('patientChat.post')}
                 </button>
 
             </div>

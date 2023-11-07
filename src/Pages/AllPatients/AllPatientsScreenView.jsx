@@ -2,6 +2,7 @@ import React from 'react';
 import { BsSearch } from 'react-icons/bs';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import PatientTile from '../../Components/patientPartials/PatientTile';
+import { useTranslation } from 'react-i18next';
 
 const AllPatientsScreenView = ({
   searchTerm,
@@ -9,6 +10,8 @@ const AllPatientsScreenView = ({
   navigate,
   filteredPatients,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div>
       <div className="flex justify-between w-full pl-5 pr-5 pt-1">
@@ -21,7 +24,7 @@ const AllPatientsScreenView = ({
               <input
                 className="block w-full bg-white border border-gray-300 rounded-md pl-10 pr-12 py-2 focus:outline-blue-200 focus:ring-2 focus:ring-blue-400 transition duration-300"
                 type="text"
-                placeholder="Search..."
+                placeholder={t('allPatientsScreen.searchPlaceholder')}
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -34,14 +37,18 @@ const AllPatientsScreenView = ({
             onClick={() => navigate('/invite')}
           >
             <AiFillPlusCircle className="text-lg mr-2 text-white" />
-            <h3 className="text-sm text-white font-semibold">Invites</h3>
+            <h3 className="text-sm text-white font-semibold">
+              {t('allPatientsScreen.invites')}
+            </h3>
           </button>
         </div>
       </div>
 
       <div className="w-full h-full p-5">
         {filteredPatients.length === 0 ? (
-          <h1 className="text-2xl text-gray-700 font-semibold">No Patients</h1>
+          <h1 className="text-2xl text-gray-700 font-semibold">
+            {t('allPatientsScreen.noPatients')}
+          </h1>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredPatients.map((patient) => (
