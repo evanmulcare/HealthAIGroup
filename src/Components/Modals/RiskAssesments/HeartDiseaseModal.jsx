@@ -4,7 +4,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import Confetti from 'react-confetti'
 import { useDispatch } from 'react-redux';
-import { createReportAsync } from '../../Contexts/actionCreators/ReportActionCreator';
+import { createReportAsync } from '../../../Contexts/actionCreators/ReportActionCreator';
 
 const HeartDiseaseModal = ({ setShowHeartDiseaseModal, showHeartDiseaseModal, patientId }) => {
     const [predictionResult, setPredictionResult] = useState(null);

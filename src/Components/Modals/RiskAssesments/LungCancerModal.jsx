@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { AiOutlineClose } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import Confetti from 'react-confetti';
-import { createReportAsync } from '../../Contexts/actionCreators/ReportActionCreator';
+import { createReportAsync } from '../../../Contexts/actionCreators/ReportActionCreator';
 import { useDispatch } from 'react-redux';
 const LungCancerModal = ({ setShowLungCancerModal, showLungCancerModal, patientId }) => {
     const [predictionResult, setPredictionResult] = useState(null);

@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { RiArrowRightSLine } from 'react-icons/ri';
-import HeartDiseaseModal from '../Modals/HeartDiseaseModal';
-import ColonCancerModal from '../Modals/ColonCancerModal';
-import LungCancerModal from '../Modals/LungCancerModal';
+import HeartDiseaseModal from '../Modals/RiskAssesments/HeartDiseaseModal';
+import DiabetesModal from '../Modals/RiskAssesments/DiabetesModal';
+import LungCancerModal from '../Modals/RiskAssesments/LungCancerModal';
 import ReportTile from './ReportTile';
 import HeartImage from '../../Assets/HeartImage.webp'
 import LungImage from '../../Assets/LungImage.png'
@@ -15,7 +15,7 @@ const PatientRiskPage = ({ patient }) => {
     const { t } = useTranslation();
 
     const [showHeartDiseaseModal, setShowHeartDiseaseModal] = useState(false);
-    const [showColonCancerModal, setShowColonCancerModal] = useState(false);
+    const [showDiabetesModal, setShowDiabetesModal] = useState(false);
     const [showLungCancerModal, setShowLungCancerModal] = useState(false);
     const dispatch = useDispatch();
     
@@ -28,7 +28,6 @@ const PatientRiskPage = ({ patient }) => {
     };
 
     const reports = useSelector(state => selectReportsByPatientId(state, patient?.docId));
-    reports.sort((a, b) => a.created - b.created);
 
     return (
         <div className="h-4/5 w-full overflow-scroll">
@@ -38,12 +37,16 @@ const PatientRiskPage = ({ patient }) => {
                 <HeartDiseaseModal
                     setShowHeartDiseaseModal={setShowHeartDiseaseModal}
                     showHeartDiseaseModal={showHeartDiseaseModal}
+                    patientId={patient?.docId}
+
                 />
             )}
-            {showColonCancerModal && (
-                <ColonCancerModal
-                    setShowColonCancerModal={setShowColonCancerModal}
-                    showColonCancerModal={showColonCancerModal}
+            {showDiabetesModal && (
+                <DiabetesModal
+                    setShowDiabetesModal={setShowDiabetesModal}
+                    showDiabetesModal={showDiabetesModal}
+                    patientId={patient?.docId}
+
                 />
             )}
 
@@ -72,7 +75,7 @@ const PatientRiskPage = ({ patient }) => {
                         className="bg-cover bg-right"
 
                     ></div>
-                    <div className="absolute left-0 top-0 right-0 bottom-0 bg-gradient-to-r from-blue-500 to-blue-700 opacity-70 rounded-2xl"></div>
+                    <div className="absolute left-0 top-0 right-0 bottom-0 bg-gray-800 opacity-90 rounded-2xl"></div>
                     <div className="relative z-10">
                         <div className="flex justify-between items-center mb-4">
                             <div className="text-3xl font-semibold text-white">{t('riskPage.heartDiseaseTitle')}</div>
@@ -101,7 +104,7 @@ const PatientRiskPage = ({ patient }) => {
                         className="bg-cover bg-right"
 
                     ></div>
-                    <div className="absolute left-0 top-0 right-0 bottom-0 bg-gradient-to-r from-red-500 to-red-700 opacity-70 rounded-2xl"></div>
+                    <div className="absolute left-0 top-0 right-0 bottom-0 bg-gray-800 opacity-90 rounded-2xl"></div>
                     <div className="relative z-10">
                         <div className="flex justify-between items-center mb-4">
                             <div className="text-3xl font-semibold text-white ">{t('riskPage.lungCancerTitle')}</div>
@@ -120,7 +123,7 @@ const PatientRiskPage = ({ patient }) => {
 
                 <div
                     className="rounded-2xl shadow-md p-6 h-full cursor-pointer transform hover:scale-105 transition-transform duration-300"
-                    onClick={() => setShowColonCancerModal(true)}
+                    onClick={() => setShowDiabetesModal(true)}
                     style={{
                         background: `url(${ColonImage}) no-repeat`,
                         backgroundSize: '50%', // Adjust the size as needed
@@ -131,16 +134,16 @@ const PatientRiskPage = ({ patient }) => {
                         className="bg-cover bg-right"
 
                     ></div>
-                    <div className="absolute left-0 top-0 right-0 bottom-0 bg-gradient-to-r from-green-500 to-green-700 opacity-70 rounded-2xl"></div>
+                    <div className="absolute left-0 top-0 right-0 bottom-0 bg-gray-800 opacity-90 rounded-2xl"></div>
                     <div className="relative z-10">
                         <div className="flex justify-between items-center mb-4">
-                            <div className="text-3xl font-semibold text-white ">{t('riskPage.colonCancerTitle')}</div>
+                            <div className="text-3xl font-semibold text-white ">{t('riskPage.diabetesTitle')}</div>
                         </div>
                         <p className="text-md text-gray-100 mb-6">
-                        {t('riskPage.colonCancerText')} 
+                        {t('riskPage.diabetesText')} 
                         </p>
                         <button className="flex items-center text-white hover:text-gray-200 transition duration-300">
-                            <span>{t('riskPage.colonCancerRun')}</span>
+                            <span>{t('riskPage.diabetesRun')}</span>
                             <RiArrowRightSLine size={20} className="ml-2" />
                         </button>
                     </div>

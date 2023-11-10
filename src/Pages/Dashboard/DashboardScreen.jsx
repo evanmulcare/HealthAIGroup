@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import DashboardView from './DashboardView';
 import i18n from '../../Translations/i18n';
 import { changeTranslation } from '../../Contexts/actionCreators/TranslationActionCreator';
-
-import { downloadHeartDiseaseAccuracy, downloadLungCancerAccuracy, downloadHeartDiseaseReport, downloadLungCancerReport } from '../../Hooks/usePredictionDataReport'
 const DashboardScreen = () => {
   const users = useSelector((state) => state.users.users);
   const currentUser = useSelector((state) => state.auth.currentUser);
@@ -23,10 +21,7 @@ const DashboardScreen = () => {
       currentUserData={currentUserData}
       selectedLanguage={selectedLanguage}
       handleLanguageChange={handleLanguageChange}
-      downloadHeartDiseaseAccuracy={downloadHeartDiseaseAccuracy}
-      downloadLungCancerAccuracy={downloadLungCancerAccuracy}
-      downloadHeartDiseaseReport={downloadHeartDiseaseReport}
-      downloadLungCancerReport={downloadLungCancerReport}
+     
     />
   );
 };

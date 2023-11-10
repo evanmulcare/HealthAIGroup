@@ -6,4 +6,6 @@ export { default as LoginScreen } from './Login/LoginScreen';
 export { default as ExitScreen } from './Exit/ExitScreen';
 export { default as ChatbotScreen } from './Chatbot/ChatbotScreen';
 export { default as ProfilePage } from './Profile/ProfilePage';
+export { default as LandingPage } from './LandingPage';
+
 export { default as IndividualPatientScreen } from './IndividualPatient/IndividualPatientScreen';

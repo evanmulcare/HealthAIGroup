@@ -14,7 +14,8 @@ import {
   ProfilePage,
   IndividualPatientScreen,
   ChatbotScreen,
-  InvitePatientScreen
+  InvitePatientScreen,
+  LandingPage
 } from './Pages';
 
 import Navbar from './Components/Navbar';
@@ -36,7 +37,7 @@ function App() {
         <Navbar />
         <div>
           <Routes>
-            <Route path='/' element={<Navigate to='/signin' />} />
+            <Route path='/' element={<LandingPage />} />
 
             <Route path='/signin' element={<LoginScreen />} />
         

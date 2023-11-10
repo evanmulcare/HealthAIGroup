@@ -25,7 +25,7 @@ const ReportTile = ({ report }) => {
                 <h1 className="text-2xl font-semibold text-gray-800 ml-4">
                     {report?.type === "heart" ? t("reportTile.heartDiseasePredictionReport") :
                         report?.type === "lung" ? t("reportTile.lungCancerPredictionReport") :
-                            report?.type === "colon" ? t("reportTile.colonCancerPredictionReport") :
+                            report?.type === "diabetes" ? t("reportTile.diabetesPredictionReport") :
                                 ""}
                 </h1>
 
@@ -50,7 +50,7 @@ const ReportTile = ({ report }) => {
                                 <AiOutlineCloseCircle className='text-8xl text-red-600 text-center' style={{ display: 'block', margin: '0 auto' }} />
                             )}
 
-                            <div className="w-24 h-24 border rounded-full bg-cover bg-center" style={{ backgroundImage: `url(${report?.type === "heart" ? HeartImage : report?.type === "lung" ? LungImage : report?.type === "colon" ? ColonImage : ''})` }}>
+                            <div className="w-24 h-24 border rounded-full bg-cover bg-center" style={{ backgroundImage: `url(${report?.type === "heart" ? HeartImage : report?.type === "lung" ? LungImage : report?.type === "diabetes" ? ColonImage : ''})` }}>
                             </div>
                         </div>
                         <h2 className='text-2xl font-semibold text-gray-800 text-center'>
@@ -58,8 +58,8 @@ const ReportTile = ({ report }) => {
                                 (report?.result === "1" ? t("reportTile.heartDiseaseLikely") : t("reportTile.heartDiseaseUnlikely"))
                                 : report?.type === "lung" ?
                                     (report?.result === "1" ? t("reportTile.lungCancerLikely") : t("reportTile.lungCancerUnlikely"))
-                                    : report?.type === "colon" ?
-                                        (report?.result === "1" ? t("reportTile.colonCancerLikely") : t("reportTile.colonCancerUnlikely"))
+                                    : report?.type === "diabetes" ?
+                                        (report?.result === "1" ? t("reportTile.diabetesLikely") : t("reportTile.diabetesUnlikely"))
                                         : ""}
                         </h2>
 
@@ -69,8 +69,8 @@ const ReportTile = ({ report }) => {
                                     ? t("reportTile.heartDiseaseSafe")
                                     : report?.type === "lung"
                                         ? t("reportTile.lungCancerSafe")
-                                        : report?.type === "colon"
-                                            ? t("reportTile.colonCancerSafe")
+                                        : report?.type === "diabetes"
+                                            ? t("reportTile.diabetesSafe")
                                             : t("reportTile.patientSafe")}
                             </p>
                         ) : (
@@ -79,8 +79,8 @@ const ReportTile = ({ report }) => {
                                     ? t("reportTile.heartDiseaseAtRisk")
                                     : report?.type === "lung"
                                         ? t("reportTile.lungCancerAtRisk")
-                                        : report?.type === "colon"
-                                            ? t("reportTile.colonCancerAtRisk")
+                                        : report?.type === "diabetes"
+                                            ? t("reportTile.diabetesAtRisk")
                                             : t("reportTile.patientAtRisk")}
                             </p>
                         )}
@@ -127,7 +127,18 @@ const ReportTile = ({ report }) => {
                                 {renderField(t("reportTile.chestPain"), report?.CHEST_PAIN)}
 
                             </div>
-                            : report?.type === "colon" ? t("reportTile.colonCancerPredictionReport") : ""}
+                            : report?.type === "diabetes" ? 
+                            <div className="md:flex flex-wrap">
+                                {renderField(t("reportTile.patientAge"), report?.Age)}
+                                {renderField(t("reportTile.BMI"), report?.BMI)}
+                                {renderField(t("reportTile.bloodPressure"), report?.BloodPressure)}
+                                {renderField(t("reportTile.DiabetesPedigreeFunction"), report?.DiabetesPedigreeFunction)}
+                                {renderField(t("reportTile.Glucose"), report?.Glucose)}
+                                {renderField(t("reportTile.Insulin"), report?.Insulin)}
+                                {renderField(t("reportTile.Pregnancies"), report?.Pregnancies)}
+                                {renderField(t("reportTile.SkinThickness"), report?.SkinThickness)}
+                            </div>
+                            : ""}
                 </div>
             </div>
         </div >

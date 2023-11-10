@@ -12,7 +12,7 @@ const ExitScreen = () => {
 
   const handleLogoutClick = () => {
     dispatch(logoutUserAsync());
-    navigate('/signin');
+    navigate('/');
   };
 
   const handleCancel = () => {
