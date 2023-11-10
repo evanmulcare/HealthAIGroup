@@ -73,6 +73,7 @@ export const logoutUserAsync = () => (dispatch) => {
 
 export const signUpWithEmailAndPasswordAsync = (
   email,
+  phone,
   password,
   firstname,
   lastname,
@@ -105,6 +106,7 @@ export const signUpWithEmailAndPasswordAsync = (
           firstname: firstname,
           lastname: lastname,
           email: email,
+          phone: phone,
           role: role,
           profileimg: profileimg
         });
