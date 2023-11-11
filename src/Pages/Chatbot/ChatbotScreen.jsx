@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 const Chatbot = () => {
   const { t } = useTranslation();
 
-  const API_KEY = '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'; // CHATGPT API KEY
+  const API_KEY = process.env.CHATBOT_API_KEY;
 
   const users = useSelector((state) => state.users.users);
   const currentUser = useSelector((state) => state.auth.currentUser);
