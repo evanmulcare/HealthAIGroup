@@ -53,7 +53,7 @@ const HeartDiseaseModal = ({ setShowHeartDiseaseModal, showHeartDiseaseModal, pa
         };
 
         try {
-            const response = await fetch("http://127.0.0.1:5000/predict-heart-disease", {
+            const response = await fetch("https://healthaibackendtester.onrender.com/predict-heart-disease", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

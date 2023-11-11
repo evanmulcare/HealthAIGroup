@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import DefaultProfile from '../../Assets/DefaultProfile.png';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import RemovePatientModal from '../../Components/Modals/RemovePatientModal';
 
 const PatientTile = ({ patient }) => {
   const { t } = useTranslation();
+  const [showRemoveModal, setShowRemoveModal] = useState(null);
 
 
   const selectReportsByPatientId = (state, recieverId) => {
@@ -38,6 +40,9 @@ const PatientTile = ({ patient }) => {
 
   return (
     <div className="rounded-lg w-full h-full border shadow-lg p-4  bg-white mb-4" ref={tileRef}>
+      {showRemoveModal &&
+      <RemovePatientModal setShowRemoveModal={setShowRemoveModal} patient={patient}/>}
+
       <div className="flex flex-col md:flex-row justify-between items-center mb-4">
         <div className="flex items-center mt-2">
           <div className="text-xl font-semibold text-gray-800 mb-4">
@@ -66,7 +71,7 @@ const PatientTile = ({ patient }) => {
             <div className="relative">
               <div className="absolute top-full w-44 left-5 mt-1 bg-white border border-gray-300 rounded-md shadow-md z-10 text-gray-700">
                 <ul>
-                  <li className="px-4 w-full py-2 cursor-pointer hover:bg-gray-100 inline-flex">
+                  <li className="px-4 w-full py-2 cursor-pointer hover:bg-gray-100 inline-flex" onClick={() => setShowRemoveModal(true)}>
                     <FaTimesCircle className="text-md mr-2 text-red-500" />
                     <span className="inline text-xs mb-2">{t('patientTile.delete')}</span>
                   </li>

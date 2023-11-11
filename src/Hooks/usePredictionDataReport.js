@@ -129,27 +129,27 @@ export const addRow = ({ reports, type, setData, data }) => {
 
 
 export const downloadHeartDiseaseAccuracy = () => {
-  downloadAccuracyReport("http://127.0.0.1:5000/download-heart-data-accuracy-txt", 'HeartDiseaseAccuracy.txt');
+  downloadAccuracyReport("https://healthaibackendtester.onrender.com/download-heart-data-accuracy-txt", 'HeartDiseaseAccuracy.txt');
 };
 
 export const downloadLungCancerAccuracy = () => {
-  downloadAccuracyReport("http://127.0.0.1:5000/download-lung-data-accuracy-txt", 'LungCancerAccuracy.txt');
+  downloadAccuracyReport("https://healthaibackendtester.onrender.com/download-lung-data-accuracy-txt", 'LungCancerAccuracy.txt');
 };
 
 export const downloadDiabetesAccuracy = () => {
-  downloadAccuracyReport("http://127.0.0.1:5000/download-diabetes-data-accuracy-txt", 'DiabetesAccuracy.txt');
+  downloadAccuracyReport("https://healthaibackendtester.onrender.com/download-diabetes-data-accuracy-txt", 'DiabetesAccuracy.txt');
 };
 
 
 export const downloadHeartDiseaseReport = () => {
-  downloadDataset("http://127.0.0.1:5000/download-heart-data-csv", 'HeartDiseaseDataset.csv');
+  downloadDataset("https://healthaibackendtester.onrender.com/download-heart-data-csv", 'HeartDiseaseDataset.csv');
 };
 
 export const downloadLungCancerReport = () => {
-  downloadDataset("http://127.0.0.1:5000/download-lung-data-csv", 'LungCancerDataset.csv');
+  downloadDataset("https://healthaibackendtester.onrender.com/download-lung-data-csv", 'LungCancerDataset.csv');
 };
 
 
 export const downloadDiabetesReport = () => {
-  downloadDataset("http://127.0.0.1:5000/download-diabetes-data-csv", 'DiabetesDataset.csv');
+  downloadDataset("https://healthaibackendtester.onrender.com/download-diabetes-data-csv", 'DiabetesDataset.csv');
 };

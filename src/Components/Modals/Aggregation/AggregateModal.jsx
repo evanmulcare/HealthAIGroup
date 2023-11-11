@@ -51,7 +51,7 @@ const AggregateModal = ({ title, showAggregateModal, setShowAggregateModal, type
     };
     const fetchData = async (type) => {
         try {
-            const response = await fetch(`http://127.0.0.1:5000/download-${type}-data-csv`);
+            const response = await fetch(`https://healthaibackendtester.onrender.com/download-${type}-data-csv`);
             const blob = await response.blob();
       
             // Convert blob to data

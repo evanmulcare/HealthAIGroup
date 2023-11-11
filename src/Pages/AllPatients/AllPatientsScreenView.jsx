@@ -1,9 +1,8 @@
-import React from 'react';
+import { useState } from 'react'; 
 import { BsSearch } from 'react-icons/bs';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import PatientTile from '../../Components/patientPartials/PatientTile';
 import { useTranslation } from 'react-i18next';
-
 const AllPatientsScreenView = ({
   searchTerm,
   setSearchTerm,
