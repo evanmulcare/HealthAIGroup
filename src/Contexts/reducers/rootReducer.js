@@ -3,6 +3,8 @@ import userReducer from './userReducer.js';
 import authReducer from './AuthReducer.js';
 import fileSystemsReducer from './FileSystemReducer.js';
 import commentReducer from './commentReducer.js';
+import ReportReducer from './ReportReducer.js';
+import TranslationReducer from './TranslationReducer.js';
 
 const rootReducer = (state, action) => {
 
@@ -18,7 +20,9 @@ const appReducer = combineReducers({
   auth: authReducer,
   users: userReducer,
   fileSystem: fileSystemsReducer,
-  comments: commentReducer
+  comments: commentReducer,
+  reports: ReportReducer,
+  language: TranslationReducer
 });
 
 export default rootReducer;
