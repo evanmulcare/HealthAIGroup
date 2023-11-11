@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../Contexts/actionCreators/ userActionCreator';
-import { limit, query, where, doc, addDoc, getDoc, getDocs, collection } from "firebase/firestore";
+import { doc, addDoc, getDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
 import InviteTile from '../../Components/InviteTile';
 import fire from "../../firebase";
