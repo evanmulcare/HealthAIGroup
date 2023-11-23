@@ -147,7 +147,7 @@ const FileTile = ({ name, type, onDoubleClick, UserId, updatedAt, url }) => {
             </div>
 
             <p className="text-gray-400 text-xs ml-1 mr-1">
-              {userData?.firstname} {userData?.lastname}
+              {userData?.firstName} {userData?.lastName}
             </p>
 
 

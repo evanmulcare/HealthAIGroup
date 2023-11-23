@@ -33,7 +33,7 @@ const AggregateModal = ({ title, showAggregateModal, setShowAggregateModal, type
 
     const patientOptions = doctorsPatients.map((element) => ({
         value: element?.docId,
-        label: element?.firstname,
+        label: element?.firstName,
         logoPicture: element?.profileimg,
     }));
 

@@ -69,7 +69,7 @@ const RegisterForm = () => {
 
   const doctorOptions = doctorData.map((element) => ({
     value: element.docId,
-    label: element.firstname + ' ' + element.lastname,
+    label: element.firstName + ' ' + element.lastName,
     logoPicture: element.profileimg,
   }));
 
@@ -87,8 +87,8 @@ const RegisterForm = () => {
     phone: '',
     password: '',
     confirmPassword: '',
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     permissions: 'doctor'/*,
     doctor:  '',*/
   });
@@ -136,7 +136,7 @@ const RegisterForm = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      if (input.password === input.confirmPassword) dispatch(signUpWithEmailAndPasswordAsync(input.email, input.phone, input.password, input.firstname, input.lastname, input.permissions, fileURL, input.doctor));
+      if (input.password === input.confirmPassword) dispatch(signUpWithEmailAndPasswordAsync(input.email, input.phone, input.password, input.firstName, input.lastName, input.permissions, fileURL, input.doctor));
 
       else {
         // Error toast.
@@ -165,13 +165,13 @@ const RegisterForm = () => {
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
               First Name
             </label>
-            <input onChange={handleChange} name="firstname" value={input.firstname} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane" required />
+            <input onChange={handleChange} name="firstName" value={input.firstName} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" id="grid-first-name" type="text" placeholder="Jane" required />
           </div>
           <div className="w-full md:w-1/2 px-3">
             <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" >
               Last Name
             </label>
-            <input onChange={handleChange} name="lastname" value={input.lastname} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Doe" required />
+            <input onChange={handleChange} name="lastName" value={input.lastName} className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" type="text" placeholder="Doe" required />
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">

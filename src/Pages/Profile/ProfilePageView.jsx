@@ -43,7 +43,7 @@ const ProfilePageView = ({
 
             <div className="mt-3">
               <h2 className="text-xl md:text-2xl font-semibold text-gray-800 text-left ml-6">
-                {currentUserData?.firstname} {currentUserData?.lastname}
+                {currentUserData?.firstName} {currentUserData?.lastName}
               </h2>
             </div>
           </div>

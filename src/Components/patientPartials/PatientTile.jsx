@@ -48,7 +48,7 @@ const PatientTile = ({ patient }) => {
           <div className="text-xl font-semibold text-gray-800 mb-4">
             <div className="text-left">
               <h2 className="text-xl md:text-2xl font-semibold text-gray-800 text-left">
-                {patient?.firstname} {patient?.lastname}
+                {patient?.firstName} {patient?.lastName}
               </h2>
               <h3 className="text-sm text-gray-500 md:text-gray-400">{patient?.email}</h3>
             </div>

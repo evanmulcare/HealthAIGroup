@@ -18,7 +18,7 @@ const DashboardView = ({ currentUserData, selectedLanguage, handleLanguageChange
 
       <div className="flex flex-col md:flex-row justify-center items-center md:justify-between mb-5">
         <h1 className="text-4xl font-semibold text-gray-800 md:ml-2">
-          {t('dashboard.greeting', { name: currentUserData?.firstname })}
+          {t('dashboard.greeting', { name: currentUserData?.firstName })}
         </h1>
         <div className="space-y-2 space-x-2 sm mt-5">
           <button
@@ -63,7 +63,7 @@ const DashboardView = ({ currentUserData, selectedLanguage, handleLanguageChange
             </div>
             <div className="mt-3 ml-5">
               <h2 className="text-xl md:text-2xl font-semibold text-gray-800 text-left">
-                {currentUserData?.firstname} {currentUserData?.lastname}
+                {currentUserData?.firstName} {currentUserData?.lastName}
               </h2>
               <div className="md:mt-2">
                 <h3 className="text-sm text-gray-500 md:text-gray-400">

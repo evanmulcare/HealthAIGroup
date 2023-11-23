@@ -20,7 +20,7 @@ const InviteTile = ({ invitedPatient }) => {
 			thisTile.parentElement.remove();
 
 			// Toast.
-			toast.info('Invite to ' + invitedUser?.firstname + ' ' + invitedUser?.lastname + ' has been cancelled.', {
+			toast.info('Invite to ' + invitedUser?.firstName + ' ' + invitedUser?.lastName + ' has been cancelled.', {
 				position: 'top-center',
 				autoClose: 3000,
 			});
@@ -42,7 +42,7 @@ const InviteTile = ({ invitedPatient }) => {
 					<div className="text-xl font-semibold text-gray-800">
 						<div className="text-left">
 							<h2 className="text-xl md:text-2xl font-semibold text-gray-800 text-left">
-								{invitedUser?.firstname +" "+ invitedUser?.lastname}
+								{invitedUser?.firstName +" "+ invitedUser?.lastName}
 							</h2>
 							<h3 className="text-sm text-gray-500 md:text-gray-400">ID: {invitedUser?.docId}</h3>
 						</div>

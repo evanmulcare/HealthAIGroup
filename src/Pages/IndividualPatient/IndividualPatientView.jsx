@@ -31,7 +31,7 @@ const IndividualPatientView = ({ activeTab, setActiveTab, patient, params, navig
                         </div>
                         <div className="ml-2 mt-1">
                             <h2 className="text-md font-semibold text-gray-800 text-left">
-                                {patient?.firstname} {patient?.lastname}
+                                {patient?.firstName} {patient?.lastName}
                             </h2>
                             <div className="mt02">
                                 <h3 className="text-sm text-gray-500 md:text-gray-400">

@@ -28,7 +28,7 @@ const renderComment = (comment, currentUser, userData) => {
           )}
           <div>
             <div className={`text-gray-700 text-xs ${isRightAligned}`}>
-              {isCurrentUser ? (comment?.created ? formattedDate : 'N/A') : `${commentUser?.firstname} ${commentUser?.lastname}  ${comment?.created ? formattedDate : 'N/A'}`}
+              {isCurrentUser ? (comment?.created ? formattedDate : 'N/A') : `${commentUser?.firstName} ${commentUser?.lastName}  ${comment?.created ? formattedDate : 'N/A'}`}
             </div>
             <div
               className={`${isCurrentUser

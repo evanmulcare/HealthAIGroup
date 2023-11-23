@@ -75,8 +75,8 @@ export const signUpWithEmailAndPasswordAsync = (
   email,
   phone,
   password,
-  firstname,
-  lastname,
+  firstName,
+  lastName,
   role,
   profileimg/*,
   doctor*/
@@ -92,8 +92,8 @@ export const signUpWithEmailAndPasswordAsync = (
       /*if (role == 'patient') {
         await setDoc(userDocRef, {
           // If the user's role is 'patient', add a doctor reference
-          firstname: firstname,
-          lastname: lastname,
+          firstame: firstName,
+          lastName: lastName,
           email: email,
           role: role,
           profileimg: profileimg,
@@ -103,8 +103,8 @@ export const signUpWithEmailAndPasswordAsync = (
 
       //else {
         await setDoc(userDocRef, {
-          firstname: firstname,
-          lastname: lastname,
+          firstName: firstName,
+          lastName: lastName,
           email: email,
           phone: phone,
           role: role,

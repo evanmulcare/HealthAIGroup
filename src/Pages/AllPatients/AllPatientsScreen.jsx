@@ -16,8 +16,8 @@ const AllPatientsScreen = () => {
   });
 
   const filteredPatients = doctorsPatients.filter((patient) =>
-    patient.firstname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    patient.lastname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    patient.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    patient.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     patient.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 

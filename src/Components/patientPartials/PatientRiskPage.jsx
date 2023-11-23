@@ -150,7 +150,7 @@ const PatientRiskPage = ({ patient }) => {
                 </div>
             </div>
             <div >
-                <h1 className="text-xl font-semibold text-gray-600 pl-10 mt-4">{t('riskPage.pastReports')} {patient?.firstname}</h1>
+                <h1 className="text-xl font-semibold text-gray-600 pl-10 mt-4">{t('riskPage.pastReports')} {patient?.firstName}</h1>
                 <hr className='mx-5 border' />
                 <div className='grid grid-cols-1  gap-4'>
                     {reports.map((report) => (

@@ -38,7 +38,7 @@ const RemovePatientModal = ({ setShowRemoveModal, patient }) => {
                 </button>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md overflow-y-scroll w-3/4 h-1/2">
-                <h1 className='text-xl font-semibold text-gray-800'> Remove {patient?.firstname} {patient?.lastname} from your patient list?</h1>
+                <h1 className='text-xl font-semibold text-gray-800'> Remove {patient?.firstName} {patient?.lastName} from your patient list?</h1>
 
                 <div className='flex space-x-2 mt-10 items-center w-full justify-center'>
                     <div className="h-32 w-32 rounded-full overflow-hidden mr-10">

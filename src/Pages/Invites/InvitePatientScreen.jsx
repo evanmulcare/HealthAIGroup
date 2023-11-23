@@ -136,7 +136,7 @@ const InvitePatientScreen = () => {
     return (
         <div>
             <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl grid md:grid-cols-2 gap-4 shadow-lg">
-                <div className="flex flex-col justify-between mt-4 md:mt-0 md:ml-4">
+                <div className="flex flex-col justify-between mt-4 md:mt-0">
                     <div className='space-y-2'>
                         <h3 className='font-medium text-gray-500 text-lg'>
                             Invite a patient
@@ -177,13 +177,18 @@ const InvitePatientScreen = () => {
                 </div>
             </div>
 
-            <div className='px-10 w-full h-full'>
-                <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                    {outgoingInvites.map((invite) => (
-                        <div key={invite.docId}>
-                            <InviteTile invitedPatient={invite} />
-                        </div>
-                    ))}
+            <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl shadow-lg">
+                <div className='w-full h-full'>
+                    <h3 className='font-medium text-gray-500 text-lg mb-4'>
+                        Outgoing invites
+                    </h3>
+                    <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                        {outgoingInvites.map((invite) => (
+                            <div key={invite.docId}>
+                                <InviteTile invitedPatient={invite} />
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
