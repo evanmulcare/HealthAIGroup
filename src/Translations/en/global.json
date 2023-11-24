@@ -18,7 +18,6 @@
   "aggregatemodal.subtwo": "dataset provided by HealthAI.",
   "aggregatemodal.titletwo":"Data",
   "aggregatemodal.titleone":"Aggregate New",
-
   "dashboardTile.dataset": "Dataset",
   "dashboardTile.accuracy": "Accuracy",
   "dashboard.languages.english": "English",
@@ -119,5 +118,22 @@
   "patientChat.placeholder": "Add a comment...",
   "mainLayout.newFolder": "New Folder",
   "mainLayout.new": "New",
-  "mainLayout.uploadFile": "Upload File"
+  "mainLayout.uploadFile": "Upload File",
+  "inviteScreen.invitePatient": "Invite a patient",
+  "inviteScreen.outgoingInvites": "Outgoing invitations",
+  "inviteScreen.patientID": "Patient ID:",
+  "inviteScreen.optionalMessage": "Message (optional):",
+  "inviteScreen.sendInvite": "Send Invite",
+  "inviteScreen.messagePlaceholder": "Message...",
+  "inviteScreen.inviteSuccess": "Invite successfully sent!",
+  "inviteScreen.alreadyOnList": "Patient is already on your list.",
+  "inviteScreen.alreadyInvited": "Already invited this patient.",
+  "inviteScreen.invalidID": "Error: invalid patient ID.",
+  "inviteTile.cancel": "Cancel",
+  "inviteTile.inviteCancel": "Invitation to {{invitedName}} has been cancelled.",
+  "inviteTile.cancelError": "An unexpected error occurred trying to cancel invitation.",
+  "navBar.dashboard": "Dashboard",
+  "navBar.patients": "Patients",
+  "navBar.profile": "Profile",
+  "navBar.exit": "Exit"
 }

@@ -1,11 +1,14 @@
 import React  from 'react';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 import fire from "../firebase";
 
 const InviteTile = ({ invitedPatient }) => {
 	const users = useSelector((state) => state.users.users);
 	const invitedUser = users.find((user) => user.docId === invitedPatient.receiverID);
+
+	const { t } = useTranslation();
     
 	const cancelInvite = async () => {
 		try {
@@ -20,7 +23,7 @@ const InviteTile = ({ invitedPatient }) => {
 			thisTile.parentElement.remove();
 
 			// Toast.
-			toast.info('Invite to ' + invitedUser?.firstName + ' ' + invitedUser?.lastName + ' has been cancelled.', {
+			toast.info(t("inviteTile.inviteCancel", { invitedName: invitedUser?.firstName + ' ' + invitedUser?.lastName }), {
 				position: 'top-center',
 				autoClose: 3000,
 			});
@@ -28,7 +31,7 @@ const InviteTile = ({ invitedPatient }) => {
 
 		catch (err) {
 			// Error toast.
-			toast.error('An unexpected error occurred trying to cancel invite.', {
+			toast.error(t("inviteTile.cancelError"), {
 				position: 'top-center',
 				autoClose: 3000,
 			});
@@ -52,7 +55,9 @@ const InviteTile = ({ invitedPatient }) => {
 					<button className="px-5 py-2 rounded-md bg-blue-500 hover:bg-blue-600 text-white transition duration-300"
 						onClick={() => { cancelInvite() }}
 					>
-						<h3 className="text-sm">Cancel</h3>
+						<h3 className="text-sm">
+							{t("inviteTile.cancel")}
+						</h3>
 					</button>
 				</div>
 			</div>

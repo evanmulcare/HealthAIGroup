@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../../Contexts/actionCreators/ userActionCreator';
 import { doc, addDoc, getDoc, collection } from "firebase/firestore";
 import { db } from "../../firebase";
+import { useTranslation } from 'react-i18next';
 import InviteTile from '../../Components/InviteTile';
 import fire from "../../firebase";
 
@@ -17,6 +18,8 @@ const InvitePatientScreen = () => {
     const [outgoingInvites, setOutgoingInvites] = useState([]);
 
     const dispatch = useDispatch();
+
+    const { t } = useTranslation();
 
     useEffect(() => {
         dispatch(getUsers());
@@ -85,7 +88,7 @@ const InvitePatientScreen = () => {
                         setOutgoingInvites([...outgoingInvites, {...newInviteDoc.data(), docId: newInviteDoc.id}]);
 
                         // Success toast.
-                        toast.success('Invite successfully sent!', {
+                        toast.success(t("inviteScreen.inviteSuccess"), {
                             position: 'top-center',
                             autoClose: 3000,
                         });
@@ -97,7 +100,7 @@ const InvitePatientScreen = () => {
 
                     // In case this patient is already on this doctor's patient list.
                     else {
-                        toast.warning('Patient already on your list.', {
+                        toast.warning(t("inviteScreen.alreadyOnList"), {
                             position: 'top-center',
                             autoClose: 3000,
                         });
@@ -106,7 +109,7 @@ const InvitePatientScreen = () => {
 
                 // If role isn't patient, show toast that patient ID doesn't exist.
                 else {
-                    toast.error('Error: invalid patient ID.', {
+                    toast.error(t("inviteScreen.invalidID"), {
                         position: 'top-center',
                         autoClose: 3000,
                     });
@@ -115,7 +118,7 @@ const InvitePatientScreen = () => {
 
             // If user already invited this patient, show a toast.
             else {
-                toast.warning('Already invited this patient.', {
+                toast.warning(t("inviteScreen.alreadyInvited"), {
                     position: 'top-center',
                     autoClose: 3000,
                 });
@@ -126,7 +129,7 @@ const InvitePatientScreen = () => {
             console.error('Error:', error);
 
             // If there's an error, it's probably because the user gave an invalid ID. Show a toast.
-            toast.error('Error: invalid patient ID.', {
+            toast.error(t("inviteScreen.invalidID"), {
                 position: 'top-center',
                 autoClose: 3000,
             });
@@ -139,11 +142,11 @@ const InvitePatientScreen = () => {
                 <div className="flex flex-col justify-between mt-4 md:mt-0">
                     <div className='space-y-2'>
                         <h3 className='font-medium text-gray-500 text-lg'>
-                            Invite a patient
+                            {t("inviteScreen.invitePatient")}
                         </h3>
                         <div className="grid grid-cols-2 gap-4">
                             <label className='text-gray-600 font-medium text-sm uppercase' htmlFor='id'>
-                                Patient's ID:
+                                {t("inviteScreen.patientID")}
                             </label>
                             <input
                                 id='id'
@@ -155,13 +158,13 @@ const InvitePatientScreen = () => {
                             />
 
                             <label className='text-gray-600 font-medium text-sm uppercase' htmlFor='message'>
-                                Message (Optional):
+                                {t("inviteScreen.optionalMessage")}
                             </label>
                             <textarea
                                 id='message'
                                 type={'message'}
                                 className='border rounded-md px-2 py-1 text-gray-800 col-span-2'
-                                placeholder='Message...'
+                                placeholder={t("inviteScreen.messagePlaceholder")}
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
                             />
@@ -172,7 +175,7 @@ const InvitePatientScreen = () => {
                         className='mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition duration-300'
                         onClick={handleInvite}
                     >
-                        Send Invite
+                        {t("inviteScreen.sendInvite")}
                     </button>
                 </div>
             </div>
@@ -180,7 +183,7 @@ const InvitePatientScreen = () => {
             <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl shadow-lg">
                 <div className='w-full h-full'>
                     <h3 className='font-medium text-gray-500 text-lg mb-4'>
-                        Outgoing invites
+                        {t("inviteScreen.outgoingInvites")}
                     </h3>
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
                         {outgoingInvites.map((invite) => (
