@@ -135,6 +135,11 @@ const InvitePatientScreen = () => {
             });
         }
     };
+
+    // Delete passed invite from outgoingInvites array.
+    const deleteInvite = (invite) => {
+        setOutgoingInvites(outgoingInvites.filter(item => item !== invite));
+    }
     
     return (
         <div>
@@ -154,7 +159,7 @@ const InvitePatientScreen = () => {
                                 className='border rounded-md px-2 py-1 text-gray-800 col-span-2'
                                 placeholder='ID...'
                                 value={receiverID}
-                                onChange={(e) => setReceiverID(e.target.value)}
+                                onChange={(e) => setReceiverID(e.target.value.replace(" ", ""))}
                             />
 
                             <label className='text-gray-600 font-medium text-sm uppercase' htmlFor='message'>
@@ -180,20 +185,22 @@ const InvitePatientScreen = () => {
                 </div>
             </div>
 
-            <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl shadow-lg">
-                <div className='w-full h-full'>
-                    <h3 className='font-medium text-gray-500 text-lg mb-4'>
-                        {t("inviteScreen.outgoingInvites")}
-                    </h3>
-                    <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                        {outgoingInvites.map((invite) => (
-                            <div key={invite.docId}>
-                                <InviteTile invitedPatient={invite} />
-                            </div>
-                        ))}
+            {outgoingInvites.length > 0 &&
+                <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl shadow-lg">
+                    <div className='w-full h-full'>
+                        <h3 className='font-medium text-gray-500 text-lg mb-4'>
+                            {t("inviteScreen.outgoingInvites")}
+                        </h3>
+                        <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                            {outgoingInvites.map((invite) => (
+                                <div key={invite.docId}>
+                                    <InviteTile invitedPatient={invite} deleteInvite={deleteInvite} />
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
     );
 }

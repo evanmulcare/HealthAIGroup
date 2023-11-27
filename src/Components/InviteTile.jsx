@@ -4,7 +4,8 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import fire from "../firebase";
 
-const InviteTile = ({ invitedPatient }) => {
+const InviteTile = ({ invitedPatient, deleteInvite }) => {
+	const inviteData = invitedPatient;
 	const users = useSelector((state) => state.users.users);
 	const invitedUser = users.find((user) => user.docId === invitedPatient.receiverID);
 
@@ -18,19 +19,18 @@ const InviteTile = ({ invitedPatient }) => {
 				.get()
 				.then(querySnapshot => { querySnapshot.docs[0].ref.delete(); });
 
-			// Remove tile from page.
-			var thisTile = document.getElementById(invitedUser?.docId);
-			thisTile.parentElement.remove();
+			// Execute deleteInvite method in InvitePatientScreen script to remove from page.
+			deleteInvite(inviteData);
 
-			// Toast.
+			// Success toast.
 			toast.info(t("inviteTile.inviteCancel", { invitedName: invitedUser?.firstName + ' ' + invitedUser?.lastName }), {
 				position: 'top-center',
 				autoClose: 3000,
 			});
 		}
 
+		// Error toast.
 		catch (err) {
-			// Error toast.
 			toast.error(t("inviteTile.cancelError"), {
 				position: 'top-center',
 				autoClose: 3000,
