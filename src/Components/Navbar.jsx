@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { links } from '../Data/Links';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { BiHealth, BiMenu, BiX } from 'react-icons/bi';
 
 const Navbar = () => {
@@ -8,6 +9,8 @@ const Navbar = () => {
 
   const activeLink = 'flex items-center gap-2 pl-4 pt-3 pb-2.5 rounded-lg text-sky-700 text-md m-2';
   const normalLink = 'flex items-center gap-2 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 hover:bg-light-gray m-2';
+
+const { t } = useTranslation();
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -33,12 +36,12 @@ const Navbar = () => {
                 <li key={item.id}>
                   {item.links.map((link) => (
                     <NavLink
-                      to={`/${link.name}`}
+                      to={`/${link.path}`}
                       key={link.name}
                       className={({ isActive }) => (isActive ? activeLink : normalLink)}
                     >
                       {link.icon}
-                      <span className="capitalize">{link.name}</span>
+                      <span className="capitalize">{t(link.name)}</span>
                     </NavLink>
                   ))}
                 </li>
@@ -52,13 +55,13 @@ const Navbar = () => {
               <li className='flex' key={item.id}>
                 {item.links.map((link) => (
                   <NavLink
-                    to={`/${link.name}`}
+                    to={`/${link.path}`}
                     key={link.name} // Add a key here
                     className={({ isActive }) => isActive ? activeLink : normalLink}
                   >
                     {link.icon}
-                    <span className='capitalize'>
-                      {link.name}
+                    <span>
+                      {t(link.name)}
                     </span>
                   </NavLink>
                 ))}

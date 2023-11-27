@@ -1,5 +1,5 @@
 {
-  "dashboard.greeting": "Good Day, {{name}}",
+  "dashboard.greeting": "Good day, {{name}}",
   "dashboard.exportPredictionDatasets": "Export Prediction Datasets",
   "dashboard.exportAccuracyReport": "Export Accuracy Report for Prediction Models",
   "dashboard.downloadHeartDiseaseDataset": "Download Heart Disease Dataset",
@@ -22,6 +22,7 @@
   "dashboardTile.accuracy": "Accuracy",
   "dashboard.languages.english": "English",
   "dashboard.languages.french": "French",
+  "dashboard.languages.spanish": "Spanish",
   "dashboard.exportPredictionDatasetsDescription": "Download datasets used by our machine learning models.",
   "dashboard.exportAccuracyReportDescription": "Download accuracy report of our models.",
   "allPatientsScreen.searchPlaceholder": "search",
@@ -123,9 +124,9 @@
   "inviteScreen.outgoingInvites": "Outgoing invitations",
   "inviteScreen.patientID": "Patient ID:",
   "inviteScreen.optionalMessage": "Message (optional):",
-  "inviteScreen.sendInvite": "Send Invite",
+  "inviteScreen.sendInvite": "Send Invitation",
   "inviteScreen.messagePlaceholder": "Message...",
-  "inviteScreen.inviteSuccess": "Invite successfully sent!",
+  "inviteScreen.inviteSuccess": "Invitation successfully sent!",
   "inviteScreen.alreadyOnList": "Patient is already on your list.",
   "inviteScreen.alreadyInvited": "Already invited this patient.",
   "inviteScreen.invalidID": "Error: invalid patient ID.",
@@ -134,6 +135,7 @@
   "inviteTile.cancelError": "An unexpected error occurred trying to cancel invitation.",
   "navBar.dashboard": "Dashboard",
   "navBar.patients": "Patients",
+  "navBar.healthai": "HealthAI",
   "navBar.profile": "Profile",
   "navBar.exit": "Exit"
 }

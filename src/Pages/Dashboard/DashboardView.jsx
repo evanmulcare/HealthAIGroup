@@ -39,6 +39,15 @@ const DashboardView = ({ currentUserData, selectedLanguage, handleLanguageChange
           >
             {t('dashboard.languages.french')}
           </button>
+          <button
+            className={`rounded-md px-4 py-2 text-sm font-normal ${selectedLanguage === 'spanish'
+              ? 'bg-blue-500 text-white'
+              : 'text-blue-500 bg-white'
+              }`}
+            onClick={() => handleLanguageChange('spanish')}
+          >
+            {t('dashboard.languages.spanish')}
+          </button>
         </div>
       </div>
 

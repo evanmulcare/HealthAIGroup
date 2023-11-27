@@ -9,6 +9,9 @@ i18n.use(initReactI18next).init({
     french: {
       translation: require('./fr/global.json'),
     },
+    spanish: {
+      translation: require('./es/global.json'),
+    },
   },
   lng: 'english',
   fallbackLng: 'english',

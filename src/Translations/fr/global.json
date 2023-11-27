@@ -10,6 +10,7 @@
   "dashboard.downloadDiabetesAccuracy": "Téléchargez le rapport de précision du cancer du diabetes",
   "dashboard.languages.english": "Anglais",
   "dashboard.languages.french": "Français",
+  "dashboard.languages.spanish": "Espagnol",
   "dashboard.exportPredictionDatasetsDescription": "Téléchargez les jeux de données utilisés par nos modèles d'apprentissage automatique.",
   "dashboard.exportAccuracyReportDescription": "Téléchargez le rapport de précision de nos modèles.",
   "dashboardTile.subtexttwo": "ensemble de données basé sur l'ensemble de données existant et les nouvelles informations sur les patients.",
@@ -134,6 +135,7 @@
   "inviteTile.cancelError": "Une erreur inattendue s'est produite lors de la tentative d'annulation de l'invitation.",
   "navBar.dashboard": "Tableau de Bord",
   "navBar.patients": "Patients",
+  "navBar.healthai": "HealthAI",
   "navBar.profile": "Profil",
   "navBar.exit": "Sortie"
 }

@@ -10,7 +10,8 @@ export const links = [
     links: [
 
       {
-        name: 'Dashboard',
+        name: 'navBar.dashboard',
+        path: 'Dashboard',
         icon: <AiFillHome />,
       }
     ],
@@ -20,11 +21,13 @@ export const links = [
     title: 'Patients',
     links: [
       {
-        name: 'Patients',
+        name: 'navBar.patients',
+        path: 'Patients',
         icon: <FaUsers />,
       },
       {
-        name: 'HealthAI',
+        name: 'navBar.healthai',
+        path: 'HealthAI',
         icon: <FaRobot />,
       }
     ],
@@ -34,11 +37,13 @@ export const links = [
     title: 'Account',
     links: [
       {
-        name: 'Profile',
+        name: 'navBar.profile',
+        path: 'Profile',
         icon: <BsFillPersonFill />,
       },
       {
-        name: 'Exit',
+        name: 'navBar.exit',
+        path: 'Exit',
         icon: <AiFillUnlock />,
       },
     ],
