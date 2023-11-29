@@ -36,6 +36,7 @@
   "profileScreen.cancel": "Cancel",
   "profileScreen.accountInformation": "Account Information",
   "profileScreen.accountEmail": "Account email:",
+  "profileScreen.accountPhone": "Account phone:",
   "profileScreen.accountPassword": "Account password:",
   "profileScreen.editModePlaceholder": "********",
   "profileScreen.editModeButtonLabel": "Edit",

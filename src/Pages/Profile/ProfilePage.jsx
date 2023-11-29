@@ -15,10 +15,11 @@ const ProfilePage = () => {
 	);
 
 	const [editMode, setEditMode] = useState(false);
-	const [editedEmail, setEditedEmail] = useState('');
+	const [editedEmail, setEditedEmail] = useState(users.email);
+	const [editedPhone, setEditedPhone] = useState(currentUserData.phone);
 	const [editedPassword, setEditedPassword] = useState('');
 	const [logoFile, setLogoFile] = useState(null);
-	const [fileURL, setFileURL] = useState('');
+	const [fileURL, setFileURL] = useState(currentUserData.profileimg);
 
 	const auth = getAuth();
 
@@ -28,22 +29,33 @@ const ProfilePage = () => {
 				await updateEmail(auth.currentUser, editedEmail);
 			}
 
-			if (editedPassword) {
+			if (editedPhone && editedPhone !== currentUserData.phone) {
+				await updateDoc(doc(db, 'users', currentUser.uid), {
+					phone: editedPhone
+				});
+			}
+
+			if (editedPassword !== '') {
 				await updatePassword(auth.currentUser, editedPassword);
 			}
 
 			if (fileURL !== currentUserData.profileimg) {
 				await updateDoc(doc(db, 'users', currentUser.uid), {
-					profileimg: fileURL,
+					profileimg: fileURL
 				});
 			}
+
+			// Set defaults.
+			users.email = editedEmail;
+			currentUserData.phone = editedPhone;
+			currentUserData.profileimg = fileURL;
 
 			toast.success('Changes Saved!');
 
 			setEditMode(false);
-			setEditedEmail('');
-			setEditedPassword('');
-		} catch (error) {
+		}
+		
+		catch (error) {
 			console.error('Error updating user data:', error);
 			toast.error('Error saving changes');
 		}
@@ -117,11 +129,13 @@ const ProfilePage = () => {
 			currentUserData={currentUserData}
 			editMode={editMode}
 			editedEmail={editedEmail}
+			editedPhone={editedPhone}
 			editedPassword={editedPassword}
 			handleLogoFileChange={handleLogoFileChange}
 			handleEditSave={handleEditSave}
 			setEditMode={setEditMode}
 			setEditedEmail={setEditedEmail}
+			setEditedPhone={setEditedPhone}
 			setEditedPassword={setEditedPassword}
 			users={users}
 		/>
