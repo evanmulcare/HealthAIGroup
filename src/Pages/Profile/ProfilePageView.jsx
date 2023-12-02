@@ -10,12 +10,14 @@ const ProfilePageView = ({
 	editedEmail,
 	editedPhone,
 	editedPassword,
+	confirmPassword,
 	handleLogoFileChange,
 	handleEditSave,
 	setEditMode,
 	setEditedEmail,
 	setEditedPhone,
 	setEditedPassword,
+	setConfirmPassword,
 	users
 }) => {
 
@@ -105,7 +107,29 @@ const ProfilePageView = ({
 									value={editMode ? editedPassword : t('profileScreen.editModePlaceholder')}
 									disabled={!editMode}
 									onChange={(e) => setEditedPassword(e.target.value)}
+									autoComplete='new-password'
 								/>
+
+								{editMode && (
+								<label
+									className="text-gray-600 font-medium text-sm uppercase"
+									htmlFor="password"
+								>
+									{t('profileScreen.confirmPassword')}
+								</label>
+								)}
+
+								{editMode && (
+								<input
+									id="password"
+									type={'password'}
+									className="border rounded-md px-2 py-1 text-gray-800 col-span-2"
+									value={editMode ? confirmPassword : t('profileScreen.editModePlaceholder')}
+									disabled={!editMode}
+									onChange={(e) => setConfirmPassword(e.target.value)}
+									autoComplete='new-password'
+								/>
+								)}
 							</div>
 						</div>
 
@@ -124,6 +148,7 @@ const ProfilePageView = ({
 										setEditedEmail(users.email)
 										setEditedPhone(currentUserData?.phone)
 										setEditedPassword('')
+										setConfirmPassword('')
 									}}
 								>
 									{t('profileScreen.editCancelButtonLabel')}

@@ -5,6 +5,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 import { getAuth, updateEmail, updatePassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
 import { uploadBytesResumable, getDownloadURL, ref } from 'firebase/storage';
+import { useTranslation } from 'react-i18next';
 import ProfilePageView from './ProfilePageView';
 
 const ProfilePage = () => {
@@ -18,10 +19,13 @@ const ProfilePage = () => {
 	const [editedEmail, setEditedEmail] = useState(users.email);
 	const [editedPhone, setEditedPhone] = useState(currentUserData.phone);
 	const [editedPassword, setEditedPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
 	const [logoFile, setLogoFile] = useState(null);
 	const [fileURL, setFileURL] = useState(currentUserData.profileimg);
 
 	const auth = getAuth();
+
+	const { t } = useTranslation();
 
 	const handleEditSave = async () => {
 		try {
@@ -35,8 +39,12 @@ const ProfilePage = () => {
 				});
 			}
 
-			if (editedPassword !== '') {
-				await updatePassword(auth.currentUser, editedPassword);
+			if (editedPassword !== '' && confirmPassword !== '') {
+				if (editedPassword === confirmPassword) {
+					await updatePassword(auth.currentUser, editedPassword);
+				}
+
+				else toast.warning(t('profileScreen.passwordNotMatchToast'))
 			}
 
 			if (fileURL !== currentUserData.profileimg) {
@@ -49,8 +57,10 @@ const ProfilePage = () => {
 			users.email = editedEmail;
 			currentUserData.phone = editedPhone;
 			currentUserData.profileimg = fileURL;
+			setEditedPassword('');
+			setConfirmPassword('');
 
-			toast.success('Changes Saved!');
+			toast.success(t('profileScreen.savedToast'));
 
 			setEditMode(false);
 		}
@@ -131,12 +141,14 @@ const ProfilePage = () => {
 			editedEmail={editedEmail}
 			editedPhone={editedPhone}
 			editedPassword={editedPassword}
+			confirmPassword={confirmPassword}
 			handleLogoFileChange={handleLogoFileChange}
 			handleEditSave={handleEditSave}
 			setEditMode={setEditMode}
 			setEditedEmail={setEditedEmail}
 			setEditedPhone={setEditedPhone}
 			setEditedPassword={setEditedPassword}
+			setConfirmPassword={setConfirmPassword}
 			users={users}
 		/>
 	);
